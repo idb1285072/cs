@@ -1,0 +1,10 @@
+- Method is a part of class, that contains collection of statements to do some process
+- Access modifiers of Methods: private, protected, private protected, internal, protected internal, public
+- Modifiers of Methods: static, virtual, abstract, override, new partial, sealed
+- For each **method call**, a **new stack** will be created; all local variables and parameters of the method will be stored in that stack; will be deleted automatically at the end of method execution.
+- In instance methods, the **this** keyword refers to **current object**, based on which the method is called.
+- Instance methods can access and manipulate instance fields and static fields; Static methods can access only static fields.
+  - But static method can create an object for the class; then access instance fields through that object
+- Using named arguments, you can change order of parameters while calling the method
+- Method overloading is writing multiple methods with same name in the same class with different set of parameters
+- The ref parameter is used to receive value into the method and also return some value back to the method caller; the out parameter is only used to return value back to the method caller; but not for receiving value into the method.

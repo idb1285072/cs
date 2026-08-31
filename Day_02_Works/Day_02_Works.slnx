@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Day_02_Work_01/Day_02_Work_01.csproj" Id="626ced68-73bf-4e2d-8f39-57af8f46a243" />
+  <Project Path="Day_02_Work_02/Day_02_Work_02.csproj" Id="f2eaced0-6728-4082-bb7f-31b8fd832d5c" />
+  <Project Path="Day_02_Work_03/Day_02_Work_03.csproj" Id="2322dc71-6285-476e-bbac-74a7c6e86760" />
+  <Project Path="Day_02_Work_04/Day_02_Work_04.csproj" Id="2853bf70-1b0c-46a1-bd68-978fb5f46b9a" />
+  <Project Path="Entity/Entity.csproj" Id="479839c0-a507-43ce-a376-bb5833d9ccfd" />
+</Solution>

@@ -1,0 +1,3 @@
+- If you pass reference variable as argument, the reference (address) of object will be passed to the method
+- The parameter's data type will be the class name
+- If you make any change to object in the method, the same will be affected automatically in the caller method, as you are accessing the same object

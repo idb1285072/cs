@@ -1,0 +1,5 @@
+- Instance constructor initializes instance fields; but also can access static fields
+- Static constructor initializes static fields; cannot access instance fields
+- Default (empty constructor) is provided automatically by C# compiler, if the developer creates a class without any constructor
+- It is always recommended to write a parameter-less constructor first, if you are creating parameterized constructor.
+- Use object initializer, if you want to initialize desired fields of an object, as soon as a new object is created.

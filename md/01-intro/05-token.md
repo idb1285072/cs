@@ -1,0 +1,20 @@
+- A token is the smallest meaningful element of a C# program.
+- **Keywords**
+  - `abstract, as, base, bool, break, byte, case, catch, char, checked, class, const, continue, decimal, default, delegate, do, double, else, enum, event, explicit, extern, false, finally, fixed, float, for, foreach, goto, if, implicit, in, int, interface, internal, is, lock, long, namespace, new, null, object, operator, out, override, params, private, protected, public, readonly, ref, return, sbyte, sealed, short, sizeof, stackalloc, static, string, struct, switch, this, throw, true, try, typeof, uint, ulong, unchecked, unsafe, ushort, using, virtual, void, volatile, while`
+  - **Reserved words** with a **special meaning** in C#.
+  - Generally written in **lowercase**.
+  - Cannot normally be used as identifiers.
+- **Operators**
+  - `+` `-` `*` `/` `%` `<` `!=` `=` `==` `.`
+  - `.` is member access operator
+- **Literals**: Fixed values
+  - Integer Literals: 2
+  - Floating-point Literals: 3.43
+  - Character Literals: ''
+  - String Literals: ""
+  - Boolean Literals: `true`, `false`
+- **Identifiers**:
+  - User defined Names (Variable, class, field, property name)
+  - Predefined Names (`System`, `Console`, `WriteLine`)
+- **Punctuation** / **Delimiters**
+  - `;` `,` `.` `(` `)` `{` `}` `[` `]`

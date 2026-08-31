@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="Color/Color.csproj" Id="32b83090-4b25-45c7-b810-720eaeafca7d" />
+  <Project Path="Day_01_Work_01/Day_01_Work_01.csproj" Id="30beffa8-9742-426e-8797-5a6eb7e4da7c" />
+  <Project Path="Day_01_Work_02/Day_01_Work_02.csproj" Id="220eee77-61f4-468f-aee3-e39fd93c8658" />
+  <Project Path="Day_01_Work_03/Day_01_Work_03.csproj" Id="d8b2e979-9058-42f4-90ee-52256544d047" />
+  <Project Path="Day_01_Work_04/Day_01_Work_04.csproj" Id="b4009ad5-b2ac-44b1-9e60-5968784af14e" />
+  <Project Path="Day_01_Work_05/Day_01_Work_05.csproj" Id="dc15de22-88aa-4a2c-bebb-779eb073433c" />
+  <Project Path="Day_01_Work_06/Day_01_Work_06.csproj" Id="b71c9667-3d77-4da3-a4a2-ed33cc950293" />
+  <Project Path="Day_01_Work_07/Day_01_Work_07.csproj" Id="ce889b6b-79b0-4258-a669-db2029a9f187" />
+</Solution>
