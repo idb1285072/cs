@@ -15,10 +15,10 @@
 | Called without passing arguments | Called by passing arguments                      |
 | Example: `new Student()`         | Example: `new Student("Rahim", 20)`              |
 
-### Main difference:
+## ShortCut:
 
-> - 👉 Parameterless constructor = no parameters
-> - 👉 Parameterized constructor = accepts parameters for initialization
+> 👉 Parameterless constructor = no parameters  
+> 👉 Parameterized constructor = accepts parameters for initialization
 
 # Implicit vs Explicit Constructor
 
@@ -37,7 +37,7 @@
 | Initializes fields with their **default values**           | Can initialize fields with **custom values/logic** |
 | No constructor code is written by you                      | Constructor code is written by you                 |
 
-### Main difference:
+## ShortCut:
 
-> - 👉 Implicit = Compiler creates it
-> - 👉 Explicit = Programmer writes it
+> 👉 Implicit = Compiler creates it  
+> 👉 Explicit = Programmer writes it
