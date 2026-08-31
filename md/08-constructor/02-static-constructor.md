@@ -1,14 +1,12 @@
-# Static Constructor
+# Static Constructor vs Instance Constructor
 
-- Instance Constructor
-  - Initializes instance fields; but also can access static fields
-  - Executes automatically every time when a new object is created for the class
-  - private by default. We cannot use any of access modifiers
-  - can contain any initialization logic, that should be executed every time when a new object is created for the class
-  -
-
-- Static Constructor
-  - Initializes static fields; cannot access instance fields
-  - Executes only once, i.e. when first object is created for the class or when the class is accessed for the first time during the execution of Main method
-  - public by default. Access modifier cannot be changed.
-  - can contain any initialization logic, that should be executed only once i.e. when a new object is created for the class.
+| **Instance Constructor**                                                                                            | **Static Constructor**                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Initializes **instance/object fields**. But also can access static fields.                                          | Initializes **static/class fields**.                                                                                                                                           |
+| Runs when an **object is created**                                                                                  | Runs **automatically once** for the type; i.e. when first object is created for the class or when the class is accessed for the first time during the execution of Main method |
+| Can have **parameters**                                                                                             | **Cannot have parameters**                                                                                                                                                     |
+| private by default. We can use any of access modifiers                                                              | **Cannot have an access modifier**. Implicitly, public by default. Access modifier cannot be changed.                                                                          |
+| Can be overloaded                                                                                                   | **Cannot be overloaded**                                                                                                                                                       |
+| Can access instance and static members                                                                              | Can directly access **only static members**                                                                                                                                    |
+| Called once **per object**                                                                                          | Called **only once per type**                                                                                                                                                  |
+| Can contain any initialization logic, that should be executed every time when a new object is created for the class | Can contain any initialization logic, that should be executed only once i.e. when a new object is created for the class.                                                       |
