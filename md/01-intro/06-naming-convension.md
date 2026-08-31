@@ -1,4 +1,4 @@
-### Naming Conventions in C#
+## Naming Conventions in C#
 
 - camelCase: localVariable, parameters
 - PascalCase: Class, Structure, Namespace, Field, Method, Property
