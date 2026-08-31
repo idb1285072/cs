@@ -1,0 +1,338 @@
+{
+  "quizTitle": "C# Constructors and Object Initializers",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the main purpose of a constructor in C#?",
+      "options": {
+        "A": "Destroy an object",
+        "B": "Initialize an object",
+        "C": "Compile a class",
+        "D": "Inherit a class"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 2,
+      "question": "What must be the same as the class name?",
+      "options": {
+        "A": "Method",
+        "B": "Property",
+        "C": "Constructor",
+        "D": "Variable"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 3,
+      "question": "What does a constructor have as its return type?",
+      "options": {
+        "A": "void",
+        "B": "int",
+        "C": "object",
+        "D": "No return type"
+      },
+      "answer": ["D"]
+    },
+    {
+      "id": 4,
+      "question": "When is an instance constructor normally called?",
+      "options": {
+        "A": "When the class is compiled",
+        "B": "When an object is created",
+        "C": "When the program ends",
+        "D": "When a method is overridden"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 5,
+      "question": "Which keyword is commonly used to create an object and invoke its constructor?",
+      "options": {
+        "A": "this",
+        "B": "base",
+        "C": "new",
+        "D": "static"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 6,
+      "question": "Which is a valid parameterless constructor?",
+      "options": {
+        "A": "public void Student() { }",
+        "B": "public Student() { }",
+        "C": "public int Student() { }",
+        "D": "Student void() { }"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 7,
+      "question": "What is a parameterized constructor?",
+      "options": {
+        "A": "A constructor with no parameters",
+        "B": "A constructor with one or more parameters",
+        "C": "A static method",
+        "D": "A destructor"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 8,
+      "question": "If no instance constructor is explicitly defined in a class, what does the compiler generally provide?",
+      "options": {
+        "A": "A parameterized constructor",
+        "B": "A static constructor",
+        "C": "A parameterless constructor",
+        "D": "A private constructor"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 9,
+      "question": "What happens if you define a parameterized constructor but no parameterless constructor?",
+      "options": {
+        "A": "C# automatically creates a parameterless constructor",
+        "B": "The class cannot have objects",
+        "C": "The compiler does not automatically add a parameterless constructor",
+        "D": "The parameterized constructor becomes static"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 10,
+      "question": "Which statement correctly describes an implicit constructor?",
+      "options": {
+        "A": "It is always written by the programmer",
+        "B": "It is supplied by the compiler when applicable",
+        "C": "It must have parameters",
+        "D": "It must be static"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 11,
+      "question": "What is an explicit constructor?",
+      "options": {
+        "A": "A constructor written by the programmer",
+        "B": "A constructor created by the CLR only",
+        "C": "A destructor",
+        "D": "An inherited constructor"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 12,
+      "question": "What is constructor overloading?",
+      "options": {
+        "A": "Overriding a constructor",
+        "B": "Having multiple constructors with different parameter lists",
+        "C": "Calling a constructor twice",
+        "D": "Making a constructor static"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 13,
+      "question": "Which is required for constructor overloading?",
+      "options": {
+        "A": "Different class names",
+        "B": "Different return types",
+        "C": "Different parameter lists",
+        "D": "Different access modifiers only"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 14,
+      "question": "Can constructors be overloaded?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only static constructors",
+        "D": "Only private constructors"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 15,
+      "question": "Which pair demonstrates valid constructor overloading?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only if both are static",
+        "D": "Only if both return void"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 16,
+      "question": "Can constructors have access modifiers such as public and private?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only public",
+        "D": "Only private"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 17,
+      "question": "What is a static constructor mainly used for?",
+      "options": {
+        "A": "Initializing static data",
+        "B": "Creating multiple objects",
+        "C": "Destroying objects",
+        "D": "Overriding methods"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 18,
+      "question": "Which keyword identifies a static constructor?",
+      "options": {
+        "A": "static",
+        "B": "shared",
+        "C": "class",
+        "D": "const"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 19,
+      "question": "Which is a valid static constructor?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only with public",
+        "D": "Only with parameters"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 20,
+      "question": "Can a static constructor have parameters?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only one parameter",
+        "D": "Only optional parameters"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 21,
+      "question": "Can a static constructor have an access modifier such as public?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only private",
+        "D": "Only protected"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 22,
+      "question": "How many times does a static constructor run for a given type?",
+      "options": {
+        "A": "Every time an object is created",
+        "B": "Twice",
+        "C": "Once",
+        "D": "Never"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 23,
+      "question": "What kind of members can a static constructor directly access?",
+      "options": {
+        "A": "Only instance members",
+        "B": "Static members",
+        "C": "Local variables from another method",
+        "D": "Private instance fields only"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 24,
+      "question": "Can a static constructor be overloaded?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only with different parameters",
+        "D": "Only with different return types"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 25,
+      "question": "What is an object initializer used for?",
+      "options": {
+        "A": "Destroying an object",
+        "B": "Initializing fields/properties when creating an object",
+        "C": "Creating a class",
+        "D": "Overriding a constructor"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 26,
+      "question": "Which is a valid object initializer?",
+      "code": "Student s = new Student { Name = \"Rahim\", Age = 20 };",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only for static classes",
+        "D": "Only for interfaces"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 27,
+      "question": "What does this code do?",
+      "code": "Student s = new Student { Name = \"Rahim\", Age = 20 };",
+      "options": {
+        "A": "Only creates the class",
+        "B": "Creates an object and initializes its members",
+        "C": "Creates a static object",
+        "D": "Calls a destructor"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 28,
+      "question": "In an object initializer, which members can normally be assigned?",
+      "options": {
+        "A": "Accessible fields/properties that can be assigned",
+        "B": "Only private fields",
+        "C": "Only methods",
+        "D": "Only static constructors"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 29,
+      "question": "What happens first in this code?",
+      "code": "Student s = new Student() { Name = \"Rahim\" };",
+      "options": {
+        "A": "Name is assigned first, then constructor runs",
+        "B": "Constructor runs first, then Name is assigned",
+        "C": "Nothing happens",
+        "D": "Destructor runs first"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 30,
+      "question": "Which statement is TRUE about an object initializer?",
+      "options": {
+        "A": "It replaces the constructor completely",
+        "B": "It prevents the constructor from running",
+        "C": "The constructor runs first, followed by member initialization",
+        "D": "It can only be used with static constructors"
+      },
+      "answer": ["C"]
+    }
+  ]
+}

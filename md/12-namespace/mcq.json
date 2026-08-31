@@ -1,0 +1,335 @@
+{
+  "quizTitle": "C# Namespaces and Using Directives",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the main purpose of a namespace in C#?",
+      "options": {
+        "A": "To execute code",
+        "B": "To organize types and avoid naming conflicts",
+        "C": "To create objects",
+        "D": "To allocate memory"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 2,
+      "question": "Which keyword is used to declare a namespace?",
+      "options": {
+        "A": "package",
+        "B": "module",
+        "C": "namespace",
+        "D": "group"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 3,
+      "question": "Which is a valid namespace declaration?",
+      "options": {
+        "A": "namespace MyApp { }",
+        "B": "namespace = MyApp { }",
+        "C": "namespace(MyApp) { }",
+        "D": "namespace: MyApp { }"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 4,
+      "question": "Which type can be declared inside a namespace?",
+      "options": {
+        "A": "Class",
+        "B": "Interface",
+        "C": "Struct",
+        "D": "All of the above"
+      },
+      "answer": ["D"]
+    },
+    {
+      "id": 5,
+      "question": "Can two namespaces contain classes with the same name?",
+      "options": {
+        "A": "No, never",
+        "B": "Yes",
+        "C": "Only if classes are private",
+        "D": "Only in different projects"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 6,
+      "question": "What is a nested namespace?",
+      "options": {
+        "A": "A namespace inside another namespace",
+        "B": "A class inside a namespace",
+        "C": "A namespace inside a method",
+        "D": "A namespace with no classes"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 7,
+      "question": "Which represents a nested namespace?",
+      "options": {
+        "A": "namespace A.B { }",
+        "B": "class A.B { }",
+        "C": "using A.B;",
+        "D": "namespace A + B { }"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 8,
+      "question": "In namespace Company.Project.Models, what is Models?",
+      "options": {
+        "A": "Class",
+        "B": "Method",
+        "C": "Nested namespace",
+        "D": "Object"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 9,
+      "question": "Which is equivalent to a nested namespace declaration?",
+      "options": {
+        "A": "namespace A.B { }",
+        "B": "namespace A+B { }",
+        "C": "namespace A/B { }",
+        "D": "namespace B.A { }"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 10,
+      "question": "What keyword is generally used to import a namespace?",
+      "options": {
+        "A": "include",
+        "B": "import",
+        "C": "using",
+        "D": "require"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 11,
+      "question": "Which statement imports System.Collections.Generic?",
+      "options": {
+        "A": "import System.Collections.Generic;",
+        "B": "using System.Collections.Generic;",
+        "C": "include System.Collections.Generic;",
+        "D": "use System.Collections.Generic;"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 12,
+      "question": "Why do we use using System;?",
+      "options": {
+        "A": "To create the System namespace",
+        "B": "To access types in System without fully qualifying them",
+        "C": "To delete the System namespace",
+        "D": "To inherit from System"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 13,
+      "question": "Without using System;, which can be used to call WriteLine?",
+      "options": {
+        "A": "Console.WriteLine()",
+        "B": "System.Console.WriteLine()",
+        "C": "WriteLine.System()",
+        "D": "using.Console.WriteLine()"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 14,
+      "question": "Does using copy the namespace's code into your program?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "Only classes are copied",
+        "D": "Only methods are copied"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 15,
+      "question": "What is the purpose of a using alias?",
+      "options": {
+        "A": "To rename a namespace/type for use in the current file",
+        "B": "To create a new namespace",
+        "C": "To delete a namespace",
+        "D": "To inherit a namespace"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 16,
+      "question": "Which is the correct syntax for a namespace alias?",
+      "options": {
+        "A": "alias M = MyApp.Models;",
+        "B": "using M = MyApp.Models;",
+        "C": "using alias M MyApp.Models;",
+        "D": "namespace M = MyApp.Models;"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 17,
+      "question": "Given: using M = MyApp.Models; What is M?",
+      "options": {
+        "A": "Class",
+        "B": "Method",
+        "C": "Alias",
+        "D": "Object"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 18,
+      "question": "Given: using M = MyApp.Models; M.Student s; What does M represent?",
+      "options": {
+        "A": "Student",
+        "B": "MyApp",
+        "C": "MyApp.Models",
+        "D": "s"
+      },
+      "answer": ["C"]
+    },
+    {
+      "id": 19,
+      "question": "Why are aliases particularly useful?",
+      "options": {
+        "A": "For resolving naming conflicts",
+        "B": "For increasing memory",
+        "C": "For creating threads",
+        "D": "For executing methods automatically"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 20,
+      "question": "Which alias can resolve a conflict between two namespaces containing Student?",
+      "options": {
+        "A": "using A = School1.Models;",
+        "B": "using Student = School1;",
+        "C": "alias Student;",
+        "D": "namespace Student;"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 21,
+      "question": "What does using static allow you to do?",
+      "options": {
+        "A": "Import instance members",
+        "B": "Access static members without the type name",
+        "C": "Create static classes",
+        "D": "Convert a class into a namespace"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 22,
+      "question": "Which is valid?",
+      "options": {
+        "A": "using static System.Math;",
+        "B": "using System.Math.static;",
+        "C": "static using System.Math;",
+        "D": "import static System.Math;"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 23,
+      "question": "Given: using static System.Math; Which can be written directly?",
+      "options": {
+        "A": "Math.Sqrt(25) only",
+        "B": "Sqrt(25)",
+        "C": "System.Sqrt(25)",
+        "D": "static.Sqrt(25)"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 24,
+      "question": "Without using static System.Math;, which is correct?",
+      "options": {
+        "A": "Sqrt(25)",
+        "B": "Math.Sqrt(25)",
+        "C": "static Sqrt(25)",
+        "D": "System.Sqrt(25)"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 25,
+      "question": "What type of members are primarily made available by using static?",
+      "options": {
+        "A": "Instance members",
+        "B": "Static members",
+        "C": "Private fields only",
+        "D": "Constructors only"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 26,
+      "question": "Given: using static System.Console; WriteLine(\"Hello\"); What is the effect?",
+      "options": {
+        "A": "WriteLine can be called without Console.",
+        "B": "Console is renamed to WriteLine",
+        "C": "A new console is created",
+        "D": "The code will always produce an error"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 27,
+      "question": "Which statement is TRUE about using static?",
+      "options": {
+        "A": "It imports an entire namespace",
+        "B": "It allows direct access to static members of a type",
+        "C": "It creates a nested namespace",
+        "D": "It creates an alias automatically"
+      },
+      "answer": ["B"]
+    },
+    {
+      "id": 28,
+      "question": "Which statement correctly combines an alias and a namespace?",
+      "options": {
+        "A": "using Models = MyApp.Models;",
+        "B": "alias Models = MyApp.Models;",
+        "C": "using namespace Models = MyApp.Models;",
+        "D": "namespace Models = MyApp.Models;"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 29,
+      "question": "Which statement correctly describes the difference between using and using static?",
+      "options": {
+        "A": "using imports namespace names; using static makes static members directly accessible",
+        "B": "They are exactly the same",
+        "C": "using is only for classes; using static is only for namespaces",
+        "D": "using static creates nested namespaces"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": 30,
+      "question": "What is the best summary of namespaces and using directives?",
+      "options": {
+        "A": "Namespaces organize code; using simplifies access to namespaces/types; aliases provide alternate names; using static simplifies access to static members",
+        "B": "All of them create objects",
+        "C": "All of them are used only for inheritance",
+        "D": "They are all different ways to declare classes"
+      },
+      "answer": ["A"]
+    }
+  ]
+}

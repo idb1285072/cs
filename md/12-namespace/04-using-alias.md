@@ -7,8 +7,14 @@
 ## How?
 
 ```cs
-using AliasName = Namespace;
+using AliasName = NamespacePath;
 ```
+
+## Why?
+
+- Avoid long namespace names
+- Resolve naming conflicts
+- Make code shorter
 
 ## Rules
 

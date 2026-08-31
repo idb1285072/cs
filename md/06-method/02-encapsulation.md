@@ -16,9 +16,3 @@
 
 - private fields
 - public property or public method
-
-## Benefits
-
-- Modularity
-- Hiding implementation details
-- Data integrity

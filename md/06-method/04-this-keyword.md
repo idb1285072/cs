@@ -1,6 +1,6 @@
 # `this` Keyword
 ## What
-- `this` = current object
+- `this` = **current object**
 - available only within the instance method (non-static method)
 - if parameter and field name are same, then use `this` keyword is required. Otherwise, optional
 
