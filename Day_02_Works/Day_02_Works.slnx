@@ -3,5 +3,7 @@
   <Project Path="Day_02_Work_02/Day_02_Work_02.csproj" Id="f2eaced0-6728-4082-bb7f-31b8fd832d5c" />
   <Project Path="Day_02_Work_03/Day_02_Work_03.csproj" Id="2322dc71-6285-476e-bbac-74a7c6e86760" />
   <Project Path="Day_02_Work_04/Day_02_Work_04.csproj" Id="2853bf70-1b0c-46a1-bd68-978fb5f46b9a" />
+  <Project Path="Day_02_Work_05/Day_02_Work_05.csproj" Id="c6c2f5f8-f1f8-4600-bd39-f99b90e1d00b" />
+  <Project Path="Day_02_Work_06/Day_02_Work_06.csproj" Id="1422c24f-1546-4ec7-acc7-5ddc81fe6bec" />
   <Project Path="Entity/Entity.csproj" Id="479839c0-a507-43ce-a376-bb5833d9ccfd" />
 </Solution>
