@@ -1,8 +1,12 @@
 # Console Class
 
-- I/O operations
+## What?
+
+- I/O operations through the console/terminal.
 - **static class**: can **access** all the member **without creating object**
 - `System` namespace
+
+## Example
 
 ```cs
 // I/O
@@ -30,5 +34,7 @@ int y = System.Console.CursorTop;
 // Set Title
 System.Console.Title = "My Application";
 ```
+
+## Reference
 
 > **Note:** For full mouse support use `Terminal.Gui` Nuget.

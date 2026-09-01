@@ -18,7 +18,7 @@
 
 ## CLR Components:
 
-- Class Loaders:
+- Class Loaders / Assembly Loaders:
   - Loading classes from compiled source code to memory.
   - Loads a class, when it is needed (before creating object)
 - Memory Manager:

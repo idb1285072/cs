@@ -12,8 +12,6 @@
 - .NET Application does not run directly on Operating System. It's need .NET Runtime call CLR (Execution Environment)
 - Supports multiple languages such as C#, VB, VC++, ect.
 
----
-
 ## Main parts of .NET
 
 - Language: It Supports **30+** languages. **C#** is the king of all.
@@ -22,9 +20,7 @@
 - SDK
 - Application Frameworks: ASP.NET Core, .NET MAUI, WPF, WinForms, Blazer, ASP.NET Core Identity, Entity Framework Core
 
----
-
-### .NET Libraries
+## .NET Libraries
 
 **.NET Libraries** are pre-built code provided by .NET that makes application development easier and faster.
 
@@ -48,13 +44,10 @@ Instead of writing the low-level code yourself, .NET provides the `File` class:
 using System.IO;
 
 string text = File.ReadAllText("data.txt");
-
 Console.WriteLine(text);
 ```
 
----
-
-### .NET SDK
+## .NET SDK
 
 **SDK (Software Development Kit)** is a **set of tools** (compilers, templates and CLI).
 
@@ -80,13 +73,13 @@ dotnet run
 
 ## Versions
 
-- .NET Framework version 1.0 to 4.8.1
+- .NET Framework (older, Windows-focused technology) version 1.0 to 4.8.1
 - .NET Core (Cross Platform) version 1.0 to 3.1
 - .NET version 5.0 and so on
 - CLR version 1,2,4 (no version 3)
-- One major advantage of modern .NET (.NET Core) is that it is **cross-platform**, meaning applications can run on Windows, Linux, and macOS.
+- One major advantage of modern .NET (.NET Core) is that it is **cross-platform**, meaning applications can **run on Windows, Linux, and macOS**.
 
-## .NET Core
+## [.NET Core](./ref.dotnet-framework-vs-dot-net-core.md)
 
 - Introduce in 2016
 - cross-platform

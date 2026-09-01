@@ -33,11 +33,12 @@ Here,
     - `.exe` (**Executable Assembly**), an application that can be **started directly**
     - `.dll` (**Library Assembly**), a **reusable library** that is normally loaded by another application.
 - CLR
+  - CLR loads the IL.
   - CLR provides an JIT (Just-In-Time) compiler that converts IL into native machine code.
 - machine code
   - The machine code runs on the processor or CPU
 
-## IL Code
+## How to see IL Code?
 
 - Press Windows btn. write **Developer Command Prompt for vs** and open.
 - command `ildasm` (Intermediate Language Disassembler)

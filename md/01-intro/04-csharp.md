@@ -2,40 +2,11 @@
 
 ## What?
 
-- C# (pronounced as 'see sharp') is general-purpose programming language.
-- mainly used for development of Console Apps, Windows GUI Apps and Windows Services
-- Object Oriented Programming (OOP) Language
-- Case Sensitive Language
-- Strongly-Typed Language
-- Compiler-based Language
-- Compiled-based on CLI; Executed by CLR
-- developed by Anders Hejlsberg by Microsoft, in 2002
-
-## Object
-
-- real-world person or thing (physical thing)
-- Object is **instance of class**
-- Object stores a set of fields
-
-> Note: There are two types of OOP.
->
-> 1. Class Based OOP: Object must be created based on Class
-> 2. Prototype Based OOP: Object can be created without Class
-
-## Class
-
-- Class is a **model** or **type** or **shape** of Object
-- Class in not collection of objects
-
-## Method
-- a set/group of statements to perform certain operation
-- Method should be member of class
-- The **code statements** are not allowed outside the class; they are allowed **inside the method only**
-
-## Field
-- data
-
-## Namespaces
-- Namespace is a collection of classes.
-- group-up classes
-- access by `namespace.class` 
+- **C# (pronounced “C-Sharp”)** is a **general-purpose, object-oriented programming language**
+- It is primarily used for building **web applications, APIs, desktop applications, cloud services, games, and more**.
+- It is **case-sensitive**.
+- It is a **strongly typed language**.
+- It is a **compiled language**.
+- C# code is compiled into **IL (Intermediate Language)** and executed by the **CLR (Common Language Runtime)**.
+- It is based on the **Common Language Infrastructure (CLI)** specification.
+- Developed by **Anders Hejlsberg** at **Microsoft** and was first released in **2002**.
