@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 14: Structs</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: Intro and Working with Structs</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code><strong>struct</strong></code> (short for structure) is a composite data type that allows you to group a set of related variables under a single name. The single most important characteristic of a struct is that it is a <strong>value type</strong>. This fundamentally distinguishes it from a <code>class</code>, which is a <strong>reference type</strong>. This difference dictates how structs are stored in memory, how they are passed between methods, and how they behave during assignment.</p><p>Structs are typically used for creating small, lightweight objects that logically represent a single value, such as a coordinate point, a color, or a pair of related numbers.</p><p><br></p><p><strong>How It Works: Value Type Semantics and Memory</strong></p><p>Because a struct is a value type, a variable of a struct type holds the <strong>actual data itself</strong>, not a reference (or pointer) to the data.</p><ul><li><p><strong>Memory Allocation:</strong> Structs are almost always allocated on the <strong>stack</strong>, a region of memory that is very fast and efficient. When a method call finishes, any structs created within it are instantly deallocated as the stack frame is popped. This avoids the overhead of <strong>garbage collection</strong> that comes with class objects on the heap.</p></li><li><p><strong>Assignment Behavior:</strong> When you assign one struct variable to another, you are creating a complete <strong>copy</strong> of the data. Each variable will have its own independent instance.</p></li></ul><p><br></p><p><strong>Example: Demonstrating Copy-on-Assignment</strong></p><p>Let's create a simple <code>Point</code> struct to see this behavior in action.</p><p>C#</p><pre class="prettyprint linenums">public struct Point
+{
+    // By default, fields in a struct should be public for easy access,
+    // as structs are primarily simple data containers.
+    public int X;
+    public int Y;
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // point1 holds its own X and Y values directly.
+        Point point1 = new Point();
+        point1.X = 10;
+        point1.Y = 20;
+
+        // When we assign point1 to point2, a complete COPY of the data is made.
+        // point2 is now a new, independent instance with the same values.
+        Point point2 = point1;
+
+        Console.WriteLine($"Before change: point1=({point1.X}, {point1.Y}), point2=({point2.X}, {point2.Y})");
+
+        // Now, let's change the X value of the FIRST point.
+        point1.X = 99;
+        Console.WriteLine("\n--- Changed point1.X to 99 ---");
+
+        // The change only affects point1. point2 is completely unaffected
+        // because it is a separate copy.
+        Console.WriteLine($"After change: point1=({point1.X}, {point1.Y}), point2=({point2.X}, {point2.Y})");
+    }
+}
+</pre><p><em>Output:</em></p><pre class="prettyprint linenums">Before change: point1=(10, 20), point2=(10, 20)
+
+--- Changed point1.X to 99 ---
+After change: point1=(99, 20), point2=(10, 20)
+</pre><p><br></p><p><br></p><h4><strong>Lecture 2: Structures with Constructors</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Like classes, structs can declare <strong>constructors</strong> to initialize their fields. Using a constructor is the preferred way to create a struct instance and ensure it starts in a valid and predictable state, rather than setting each field manually after creation.</p><p><br></p><p><strong>How It Works &amp; Rules</strong></p><p>There are specific rules for struct constructors that differ from class constructors:</p><ol><li><p><strong>Parameterized Constructors:</strong> You can define constructors that take parameters. Within a parameterized constructor, you <strong>must</strong> initialize <strong>all</strong> instance fields of the struct. The C# compiler enforces this rule to ensure the struct is fully initialized.</p></li><li><p><strong>The Implicit Parameterless Constructor:</strong> Every struct always has a built-in, parameterless constructor that initializes all its fields to their system default values (<code>0</code>, <code>false</code>, <code>null</code>). You <strong>cannot</strong> delete or override this default behavior.</p></li><li><p><strong>Explicit Parameterless Constructors (C# 10+):</strong> In modern C# (version 10 and later), you are now allowed to explicitly declare your own public, parameterless constructor to provide different default initialization logic. However, the implicit one still exists behind the scenes.</p></li></ol><p><br></p><p><strong>Example</strong></p><p>Let's enhance our <code>Point</code> struct with a constructor to make initialization cleaner.</p><p>C#</p><pre class="prettyprint linenums">public struct Point
+{
+    public int X;
+    public int Y;
+
+    // A public, parameterized constructor.
+    public Point(int x, int y)
+    {
+        // We MUST initialize all fields inside this constructor.
+        // If we commented out either line, we would get a compiler error.
+        this.X = x;
+        this.Y = y;
+    }
+
+    public void Display()
+    {
+        Console.WriteLine($"({X}, {Y})");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // 1. Create a point using the default parameterless constructor.
+        // X and Y will both be initialized to 0.
+        Point origin = new Point();
+        Console.Write("Origin point: ");
+        origin.Display(); // Output: (0, 0)
+
+        // 2. Create a point using our custom parameterized constructor.
+        Point p1 = new Point(15, 25);
+        Console.Write("Custom point: ");
+        p1.Display(); // Output: (15, 25)
+    }
+}</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Structures vs. Classes</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Knowing when to use a <code>struct</code> versus a <code>class</code> is a critical skill for any C# developer. This is one of the most fundamental and frequently asked interview questions because the choice has significant implications for memory management, performance, and program behavior. The core difference is that <strong>structs are value types</strong> and <strong>classes are reference types</strong>.</p><p><br></p><p><strong>Detailed Comparison</strong></p><ul><li><p><strong>Type &amp; Memory:</strong></p><ul><li><p><strong>Class:</strong> A <strong>reference type</strong>. The object itself is created on the <strong>heap</strong> (a large pool of memory managed by the garbage collector). The variable holds only a small <strong>reference (or pointer)</strong> to the object's memory location.</p></li><li><p><strong>Struct:</strong> A <strong>value type</strong>. The object is typically created on the <strong>stack</strong> (a fast, temporary memory region for method calls). The variable holds the <strong>actual data</strong> of the object directly.</p></li></ul></li><li><p><strong>Assignment Behavior:</strong></p><ul><li><p><strong>Class:</strong> Assigning a class variable to another <strong>copies the reference</strong>. Both variables then point to the <strong>same single object</strong>.</p></li><li><p><strong>Struct:</strong> Assigning a struct variable to another <strong>copies the entire data</strong>. This creates a new, independent instance.</p></li></ul></li><li><p><strong>Passing to Methods:</strong></p><ul><li><p><strong>Class:</strong> When you pass a class object to a method, a <strong>copy of the reference</strong> is passed. The method can modify the state of the original object.</p></li><li><p><strong>Struct:</strong> When you pass a struct to a method, a <strong>copy of the entire struct</strong> is passed. The method works on the copy; changes inside the method <strong>do not</strong> affect the original struct.</p></li></ul></li><li><p><strong>Inheritance:</strong></p><ul><li><p><strong>Class:</strong> Fully supports single inheritance. A class can inherit from another class.</p></li><li><p><strong>Struct:</strong> Does <strong>not</strong> support inheritance. A struct cannot inherit from another struct or class (except implicitly from <code>System.ValueType</code>).</p></li></ul></li><li><p><strong>Default Value:</strong></p><ul><li><p><strong>Class:</strong> The default value of a class variable is <code>null</code> (it references nothing).</p></li><li><p><strong>Struct:</strong> The default value is an instance of the struct with all its fields set to their own default values (<code>0</code>, <code>false</code>, etc.). A struct can never be <code>null</code>.</p></li></ul></li></ul><p><br></p><p><strong>Practical Example: The Method Pass-Through Test</strong></p><p>This example clearly demonstrates the fundamental difference in behavior when passing a class versus a struct to a method.</p><p>C#</p><pre class="prettyprint linenums">// The class (reference type)
+public class ClassPoint { public int X; }
+
+// The struct (value type)
+public struct StructPoint { public int X; }
+
+public class Program
+{
+    // This method attempts to change the X value of whatever it receives.
+    public static void TryToChangeValue(ClassPoint cp, StructPoint sp)
+    {
+        cp.X = 100;
+        sp.X = 100;
+    }
+
+    public static void Main(string[] args)
+    {
+        ClassPoint myClassPoint = new ClassPoint();
+        myClassPoint.X = 10;
+
+        StructPoint myStructPoint = new StructPoint();
+        myStructPoint.X = 10;
+
+        Console.WriteLine($"Before method call: ClassPoint.X = {myClassPoint.X}, StructPoint.X = {myStructPoint.X}");
+
+        // Pass both to the method.
+        TryToChangeValue(myClassPoint, myStructPoint);
+
+        Console.WriteLine($"After method call:  ClassPoint.X = {myClassPoint.X}, StructPoint.X = {myStructPoint.X}");
+    }
+}
+</pre><p><em>Output:</em></p><pre class="prettyprint linenums">Before method call: ClassPoint.X = 10, StructPoint.X = 10
+After method call:  ClassPoint.X = 100, StructPoint.X = 10
+</pre><p><strong>Conclusion:</strong> The change to the <code>ClassPoint</code> persisted because the method received a reference to the original object. The change to the <code>StructPoint</code> was lost because the method only operated on a temporary copy.</p><p><br></p><p><strong>Interview Perspective: When should you use a struct?</strong></p><ul><li><p><strong>Ideal Answer:</strong> "You should use a <code>class</code> by default. You should only consider using a <code>struct</code> when the type meets several criteria: it logically represents a <strong>single value</strong> (like a number or a coordinate), it is <strong>small</strong> (typically under 16 bytes), it is <strong>immutable</strong> (won't change after creation), and it will <strong>not be frequently 'boxed'</strong> or unboxed."</p></li></ul><p><br></p><p><br></p><h4><strong>Lecture 4: Readonly Structures</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code>readonly struct</code> is a special type of structure that is declared as <strong>immutable</strong>. This means that once an instance of the struct is created, its state can never be changed for its entire lifetime. This provides a strong compile-time guarantee of immutability.</p><p><br></p><p><strong>How It Works</strong></p><p>When you add the <code>readonly</code> modifier to a struct declaration, the C# compiler enforces two rules:</p><ol><li><p>All instance fields within the struct <strong>must also be declared as </strong><code><strong>readonly</strong></code>.</p></li><li><p>Because all fields are <code>readonly</code>, they can only be assigned values either at their declaration or within the struct's constructor.</p></li></ol><p>This creates a powerful guarantee that the struct is truly a "snapshot" of data that cannot be altered.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use a <code>readonly struct</code> when you want to create small, lightweight, data-centric types that are guaranteed to be immutable. This is extremely useful for:</p><ul><li><p>Creating predictable and safe code, especially in multi-threaded applications, as immutable types are inherently thread-safe.</p></li><li><p>Preventing accidental modification of data.</p></li><li><p>Clearly communicating the design intent that an object is just a "value" and should not have its state changed.</p></li></ul><p><br></p><p><strong>Example</strong></p><p>A <code>Color</code> or <code>RgbValue</code> is a perfect candidate for a <code>readonly struct</code>.</p><p>C#</p><pre class="prettyprint linenums">public readonly struct RgbColor
+{
+    // All fields MUST be readonly.
+    public readonly byte R;
+    public readonly byte G;
+    public readonly byte B;
+
+    public RgbColor(byte r, byte g, byte b)
+    {
+        // Values can only be set here, in the constructor.
+        this.R = r;
+        this.G = g;
+        this.B = b;
+    }
+
+    public void ChangeRed(byte newRed)
+    {
+        // The following line would cause a compiler error because R is readonly.
+        // this.R = newRed; // ERROR! Cannot assign to 'R' because it is a readonly field.
+    }
+}
+
+// --- In your Main method ---
+RgbColor myColor = new RgbColor(255, 165, 0); // Orange
+// 'myColor' is now immutable. Its state cannot be changed.
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: Primitive Types are Structures</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>This lecture reveals a fundamental truth about C#'s type system that clarifies much of the behavior we've seen so far. Most of the basic types that we think of as built-in keywords are, in fact, just convenient C# <strong>aliases</strong> for <code>struct</code> types defined in the <code>.NET</code> <code>System</code> namespace.</p><p><br></p><p><strong>How It Works: Keywords as Aliases</strong></p><p>Here is a list of some of the most common primitive types and the structs they represent:</p><ul><li><p><code>int</code> is an alias for <code>System.Int32</code></p></li><li><p><code>double</code> is an alias for <code>System.Double</code></p></li><li><p><code>bool</code> is an alias for <code>System.Boolean</code></p></li><li><p><code>char</code> is an alias for <code>System.Char</code></p></li><li><p><code>long</code> is an alias for <code>System.Int64</code></p></li><li><p><code>decimal</code> is an alias for <code>System.Decimal</code></p></li></ul><p><br></p><p><strong>The Implication</strong></p><p>Because these fundamental types are structs, they are all <strong>value types</strong>. This single fact explains their core behavior:</p><ul><li><p>They are stored on the stack, making them fast.</p></li><li><p>When you assign one <code>int</code> variable to another, the value is copied.</p></li><li><p>When you pass an <code>int</code> to a method, a copy of the value is passed.</p></li><li><p>They cannot be <code>null</code> (because they are not references).</p></li></ul><p>Since they are fully-featured structs, they even have methods you can call on them.</p><p>C#</p><pre class="prettyprint linenums">int myNumber = 123;
+
+// We are calling the ToString() method on the System.Int32 struct.
+string myString = myNumber.ToString(); 
+
+// You can even call methods on a literal value!
+Console.WriteLine(123.ToString());
+</pre><p><br></p><p><strong>Interview Perspective</strong></p><ul><li><p><strong>Question:</strong> "Is <code>int</code> in C# a primitive type or an object?"</p></li><li><p><strong>Ideal Answer:</strong> "In C#, <code>int</code> is an alias for the <code>System.Int32</code> struct. Because it's a struct, it is a value type. However, since all structs in .NET implicitly inherit from <code>System.ValueType</code>, which in turn inherits from <code>System.Object</code>, it can be treated like an object when needed (a process called boxing), giving it methods like <code>ToString()</code>."</p></li></ul><p><br></p><p><br></p><h4><strong>Lecture 6: IMP Points to Remember</strong></h4><p><br></p><ul><li><p><strong>Structs are Value Types, Classes are Reference Types:</strong> This is the most important distinction. It dictates how they are stored in memory (stack vs. heap), how they behave on assignment (copy vs. reference), and how they are passed to methods.</p></li><li><p><strong>Structs for Performance:</strong> Because structs are typically allocated on the stack, they do not create "garbage" that the garbage collector needs to clean up. For applications that create and destroy millions of small objects, using structs can lead to significant performance improvements.</p></li><li><p><strong>Copying Behavior is a Double-Edged Sword:</strong> The fact that structs are copied on assignment prevents one part of your code from unexpectedly changing a value used by another part. However, if you <em>expect</em> reference behavior, it can be a source of bugs. Always be conscious of this when passing structs to methods.</p></li><li><p><strong>Choose </strong><code><strong>class</strong></code><strong> by Default:</strong> This is the official Microsoft recommendation. The C# language and runtime are highly optimized for classes. You should only choose to use a <code>struct</code> when you have a specific, performance-related reason and the type you are creating fits the criteria: it's small, logically represents a single value, and is preferably immutable.</p></li><li><p><strong>Embrace Immutability with </strong><code><strong>readonly struct</strong></code><strong>:</strong> <code>readonly struct</code> is a powerful feature for creating safe, predictable value types. When a type has no reason to change its state after creation, making it a <code>readonly struct</code> is an excellent design choice.</p></li><li><p><strong>All The "Primitives" are Structs:</strong> Remembering that <code>int</code>, <code>double</code>, <code>bool</code>, etc., are all structs under the hood provides a unified mental model for understanding C#'s type system.</p></li></ul><p><br></p></div></body></html>

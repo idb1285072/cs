@@ -4,6 +4,7 @@
     {
         // Create an instance of the Category struct
         Category category = new Category();
+        Category category2 = new Category(2, "Books");
 
         // Set the properties of the Category struct
         category.CategoryId = 1;

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Section Cheat Sheet (PPT)</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Section Cheat Sheet (PPT)</h1><div class="content"><h4>Namespaces</h4><p>Namespaces is a collection of classes and "other types such as interfaces, structures, delegate types, enumerations).</p><p><br></p><p>Eg:</p><p>In a project for an organization:</p><pre class="prettyprint linenums">namespace FrontOffice
+{
+}</pre><pre class="prettyprint linenums">namespace Finance
+{
+}</pre><pre class="prettyprint linenums">namespace HR
+{
+}</pre><pre class="prettyprint linenums">namespace Inventory
+{
+}</pre><p><br></p><p>Syntax:</p><pre class="prettyprint linenums">namespace NamespaceName
+{
+  Classes
+  Interfaces
+  Structures
+  Delegate Types
+  Enumerations
+}</pre><p><br></p><p>Namespaces goal is to group-up classes and other types that are related to a particular project-module, into an unit.</p><p><br></p><p><strong>Syntax to access a type that is present inside the namespace: </strong><code>NamespaceName.TypeName</code></p><p><br></p><p><br></p><h4>Nested Namespaces</h4><p>The namespace which is declared inside another namespace is called as "Nested namespace" or “Inner Namespace".</p><p>Use nested namespaces, in order to divide the classes of a larger namespace, into smaller groups.</p><p><strong>Syntax to access a type in the inner namespace:</strong> <code>OuterNamespace.InnerNamespace.TypeName</code></p><p><br></p><p><strong>Syntax to create inner namespace:</strong></p><pre class="prettyprint linenums">namespace OuterNamespace
+{
+  Classes
+  Interfaces
+  Structures
+  Delegate Types
+  Enumerations
+
+  namespace InnerNamespace
+  {
+    Classes
+    Interfaces
+    Structures
+    Delegate Types
+    Enumerations
+  }
+}</pre><p><br></p><p><br></p><h4>Importing Namespaces ('using' Directive)</h4><p>The "using" is a directive statement (top-level statement) that should be placed at the top of the file, which specifies the namespace, from which you want to import all the classes and other types.</p><p><br></p><p><strong>Syntax: </strong><code>using Namespacename;</code></p><p><br></p><p>When you import a namespace, you can directly access all of its classes and other types (but not inner namespaces).</p><p>The "using directives" are written independently for every file.</p><p>"One using directive" can import "one namespace" only.</p><p><br></p><p><br></p><h4>'using' Alias Name</h4><p>The "using alias" directive allows you to create "alias name" for the namespace.</p><p><br></p><p><strong>Syntax:</strong></p><p><code>using AliasName = Namespacename;</code></p><p><br></p><p>Use "using alias" directive, if you want to access long namespaces with shortcut name.</p><p>It is much useful to access specific namespace, when there is namespace name ambiguity (two classes with same name in two different namespaces and both namespaces are imported in the same file).</p><p><br></p><p><br></p><h4>'using' static</h4><p>The "using static" directive allows you import a static class directly from a namespace; so that you can directly access any of its methods anywhere in the current file.</p><p><br></p><p><strong>Syntax:</strong></p><p><code>using static Namespacename.StaticClassName;</code></p><p>Use the "using static" directive to access methods of static class easily, without repeating the class name each time.</p><p><br></p></div></body></html>

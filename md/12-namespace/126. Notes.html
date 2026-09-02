@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 12: Namespaces</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: Intro to Namespaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <strong>namespace</strong> is a fundamental organizational mechanism in C# used to group related types (like classes, interfaces, and structs) under a single, hierarchical name. Its primary purposes are to manage complexity in large applications and, most importantly, to <strong>prevent naming conflicts</strong>.</p><p>Think of namespaces like a folder system on your computer. You can have two different files named <code>Report.txt</code> without any issues, as long as they reside in different folders (e.g., <code>C:\Work\Report.txt</code> and <code>C:\Home\Report.txt</code>). Similarly, in C#, you can have two different classes named <code>Logger</code> as long as they are in different namespaces (e.g., <code>MyCompany.Logging.Logger</code> and <code>ThirdParty.Analytics.Logger</code>). Without namespaces, it would be impossible to combine code from different teams or libraries without the risk of class names clashing.</p><p><br></p><p><strong>How It Works: Fully Qualified Names</strong></p><p>Every type in the .NET ecosystem has a <strong>fully qualified name</strong>, which includes its full namespace path followed by the type name. For example, the <code>string</code> type we use is actually a shorthand for its fully qualified name: <code>System.String</code>.</p><p>When you are working within a specific namespace, you can access other types in that <em>same</em> namespace directly. However, to access a type located in a <em>different</em> namespace, you <strong>must</strong> use its fully qualified name.</p><p><br></p><p><strong>Example</strong></p><p>Let's create two separate namespaces in the same project to see how this works.</p><p>C#</p><pre class="prettyprint linenums">// --- File 1: Defines a utility class in its own namespace ---
+namespace MyProject.Utilities
+{
+    public class TextHelper
+    {
+        public void SayHello()
+        {
+            // We can use 'Console' directly here because its fully qualified
+            // name, System.Console, is globally available.
+            System.Console.WriteLine("Hello from the TextHelper!");
+        }
+    }
+}
+
+// --- File 2: The main program, in a different namespace ---
+namespace MyProject.MainApplication
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // To use the TextHelper class, which is in a different namespace,
+            // we MUST use its fully qualified name.
+            MyProject.Utilities.TextHelper helper = new MyProject.Utilities.TextHelper();
+            
+            helper.SayHello();
+        }
+    }
+}</pre><p><br></p><p><br></p><h4><strong>Lecture 2: Nested Namespaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>To create an even more granular and logical organization, namespaces can be <strong>nested</strong> inside other namespaces. This allows you to create a clear hierarchy that mirrors the structure of your application or company.</p><p><br></p><p><strong>How It Works</strong></p><p>You create a nested namespace using the dot (<code>.</code>) notation. For example, the namespace <code>MyCompany.Billing.Invoicing</code> implies a hierarchy: <code>Invoicing</code> is part of the <code>Billing</code> system, which belongs to <code>MyCompany</code>. This is just like having a folder named <code>Invoicing</code> inside a folder named <code>Billing</code>. This deep organization is essential for very large enterprise applications where thousands of classes must be managed.</p><p><br></p><p><strong>Example</strong></p><p>Let's expand on our previous example with a nested namespace structure.</p><p>C#</p><pre class="prettyprint linenums">namespace MyCompany.BusinessLogic.Billing
+{
+    // This class lives inside a nested namespace.
+    public class InvoiceGenerator
+    {
+        public void CreateInvoice()
+        {
+            System.Console.WriteLine("Invoice created successfully.");
+        }
+    }
+}
+
+namespace MyCompany.MainApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // To access the class in the nested namespace, we must provide the
+            // entire path from the top-level namespace down.
+            MyCompany.BusinessLogic.Billing.InvoiceGenerator generator = 
+                new MyCompany.BusinessLogic.Billing.InvoiceGenerator();
+
+            generator.CreateInvoice();
+        }
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Importing Namespaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Typing the fully qualified name for every class you use is tedious and makes code difficult to read. The <code>using</code> directive is the C# feature that solves this problem. By placing a <code>using</code> directive at the top of your code file, you are telling the compiler, "For this file, I will be frequently using types from the specified namespace, so please recognize them by their short names."</p><p><br></p><p><strong>How It Works</strong></p><p>When the compiler encounters a type name in your code (like <code>List</code> or <code>Logger</code>), it first checks if that type is defined in the current namespace. If not, it then searches through all the namespaces that you have imported with <code>using</code> directives at the top of the file. As soon as it finds a match, it resolves the type. This removes the need for you to write the fully qualified name everywhere.</p><p><br></p><p><strong>Example</strong></p><p>Let's refactor our previous example to be much cleaner using the <code>using</code> directive.</p><p>C#</p><pre class="prettyprint linenums">// --- The other class files remain the same ---
+
+// --- In our main program file ---
+
+// We import the namespaces at the top of the file.
+using System;
+using MyProject.Utilities;
+using MyCompany.BusinessLogic.Billing;
+
+namespace MyProject.MainApplication
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Now the code is much cleaner. The compiler knows where to find
+            // these types because of the 'using' directives above.
+            Console.WriteLine("Application starting...");
+
+            TextHelper helper = new TextHelper();
+            helper.SayHello();
+
+            InvoiceGenerator generator = new InvoiceGenerator();
+            generator.CreateInvoice();
+        }
+    }
+}
+</pre><p><strong>Best Practice:</strong> Always place your <code>using</code> directives at the very top of your <code>.cs</code> file, before the <code>namespace</code> declaration.</p><p><br></p><p><br></p><h4><strong>Lecture 4: Using Alias</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code><strong>using</strong></code><strong> alias</strong> is a special form of the <code>using</code> directive that creates a new, often shorter, name for a specific type. It does not import an entire namespace, but instead creates an alias for a single class, struct, or other type.</p><p><br></p><p><strong>Why and When to Use It</strong></p><ol><li><p><strong>To Resolve Naming Conflicts (Primary Use Case):</strong> This is the most important reason. If you import two different namespaces that both contain a class with the same name, the compiler won't know which one you mean. This ambiguity results in a compile-time error. An alias allows you to create a unique name for one or both of the conflicting types.</p></li><li><p><strong>To Shorten Long Generic Type Names:</strong> If you frequently use a very long and complex generic type, you can create a simple alias for it to make your code much more readable.</p></li></ol><p><br></p><p>Syntax</p><p>using AliasName = Fully.Qualified.Namespace.TypeName;</p><p><br></p><p>Example: Resolving a Naming Conflict</p><p>The .NET framework has two different Timer classes in two different namespaces. Let's see how to use both in the same file without conflict.</p><p>C#</p><pre class="prettyprint linenums">// Create an alias for each Timer class to resolve the name clash.
+using SystemTimersTimer = System.Timers.Timer;
+using SystemThreadingTimer = System.Threading.Timer;
+
+public class TimerManager
+{
+    public void StartTimers()
+    {
+        // Now we can use the unique alias names without ambiguity.
+        SystemTimersTimer myServiceTimer = new SystemTimersTimer(1000);
+        myServiceTimer.Start();
+        Console.WriteLine("System.Timers.Timer started.");
+
+        // The 'state' and 'dueTime' parameters are just for the example.
+        SystemThreadingTimer myThreadingTimer = new SystemThreadingTimer(_ =&gt; {}, null, 0, 2000);
+        Console.WriteLine("System.Threading.Timer started.");
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: </strong><code><strong>using static</strong></code></h4><p><br></p><p><strong>Introduction</strong></p><p>The <code>using static</code> directive is a feature that allows you to import the <code><strong>static</strong></code><strong> members</strong> (methods, properties, and fields) of a single class directly into the current scope. This allows you to call those static methods without having to prefix them with the class name.</p><p><br></p><p><strong>How It Works</strong></p><p>When you write <code>using static System.Math;</code> at the top of your file, the compiler becomes aware of all the public static members of the <code>Math</code> class. When it later sees a method call like <code>Sqrt(25)</code>, it will search the imported static classes and find that <code>Sqrt</code> is a static method of <code>Math</code>, resolving the call correctly.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use this feature sparingly to improve readability when you are making <strong>frequent calls</strong> to the static members of a single class within a file.</p><ul><li><p><strong>Good Candidates:</strong> <code>System.Math</code> in a class with heavy calculations, <code>System.Console</code> in a simple console application, or a custom <code>Constants</code> class you've written.</p></li><li><p><strong>Caution:</strong> Overusing <code>using static</code> can sometimes make code less clear, as it might not be immediately obvious where a method like <code>Log()</code> or <code>Calculate()</code> is coming from if its class name is omitted.</p></li></ul><p><br></p><p><strong>Example</strong></p><p>C#</p><pre class="prettyprint linenums">// Import all static members from the Console and Math classes.
+using static System.Console;
+using static System.Math;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // We can now call WriteLine, PI, and Sqrt directly
+        // without prefixing them with Console or Math.
+        
+        double radius = 10;
+        double area = PI * Pow(radius, 2); // Pow is also from System.Math
+
+        WriteLine($"The area of a circle with radius {radius} is {area:F2}.");
+        
+        double root = Sqrt(144);
+        WriteLine($"The square root of 144 is {root}.");
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 6: IMP Points to Remember</strong></h4><p><br></p><ul><li><p><strong>Primary Purpose: Organization and Conflict Avoidance:</strong> This is the core takeaway. Namespaces are C#'s primary tool for keeping large projects organized and for preventing class name collisions when you use multiple libraries.</p></li><li><p><strong>Every .NET Type Lives in a Namespace:</strong> Remember that nothing exists in a "global" space. Even the simplest <code>string</code> is just a C# alias for the <code>System.String</code> class. <code>int</code> is an alias for <code>System.Int32</code>. Understanding this helps you see the .NET framework as one giant, well-organized library.</p></li><li><p><code><strong>using</strong></code><strong> Directive vs. </strong><code><strong>using</strong></code><strong> Alias:</strong></p><ul><li><p>A <code>using</code> directive (<code>using System.Collections.Generic;</code>) imports <strong>all types</strong> from a namespace, allowing you to use them by their short names.</p></li><li><p>A <code>using</code> alias (<code>using UserList = System.Collections.Generic.List&lt;MyApp.User&gt;;</code>) creates a new, convenient name for <strong>a single, specific type</strong>. Use it to resolve conflicts or simplify long type names.</p></li></ul></li><li><p><strong>File-Scoped Namespaces (Modern C#):</strong> In C# 10 and later, you can declare a namespace for an entire file without curly braces: <code>namespace MyCompany.MyProject;</code>. This reduces nesting and cleans up your files.</p></li><li><p><code><strong>global using</strong></code><strong> (Modern C#):</strong> Also introduced in C# 10, the <code>global using</code> directive allows you to define a <code>using</code> statement in one file (often a dedicated <code>GlobalUsings.cs</code> file) that applies to <strong>your entire project</strong>. This is extremely useful for importing commonly used namespaces like <code>System</code>, <code>System.Linq</code>, or <code>System.Collections.Generic</code> across all your files without having to repeat the directives in every single file.</p></li></ul><p><br></p></div></body></html>

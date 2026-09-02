@@ -1,8 +1,8 @@
 ## Value Types
 
 - Structures, Enumerations
-- Mainly meant for storing simple values
-- Instances are stored in Stack. Every time when a method is called, a new stack will be created
+- Mainly meant for storing **simple values**
+- Instances are **stored in Stack**. Every time when a method is called, a new stack will be created
 
 ## Reference Types
 

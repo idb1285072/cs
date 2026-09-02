@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 16: Generics</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: Generic Classes</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Generics are one of the most powerful and important features of the C# language. They allow you to design classes, interfaces, and methods with a placeholder for a data type (<code>T</code>). This placeholder is specified later by the developer who uses your code, allowing them to create type-safe and high-performance data structures without sacrificing reusability.</p><p><br></p><p>To understand why generics are so crucial, we must look at the problem they solved. Before generics, the only way to create a reusable collection was to use <code>System.Object</code>. For example, the old <code>ArrayList</code> stored everything as an <code>object</code>. This caused two major problems:</p><ol><li><p><strong>Lack of Type Safety:</strong> You could add any type of data to an <code>ArrayList</code>. You could add an integer, then a string, then a <code>Car</code> object. When you later retrieved an item, you had to perform an explicit cast and hope it was the correct type. This often led to <code>InvalidCastException</code> errors at run-time.</p></li><li><p><strong>Poor Performance (Boxing):</strong> When you added a value type (like an <code>int</code> or <code>double</code>) to an <code>ArrayList</code>, it had to be <strong>boxed</strong> (wrapped in an object on the heap). When you retrieved it, it had to be <strong>unboxed</strong>. As we learned, these operations are computationally expensive and create pressure on the garbage collector.</p></li></ol><p>Generics solve both of these problems elegantly.</p><p><br></p><p><strong>How It Works: Type Parameters and JIT Specialization</strong></p><p>You create a generic class by adding a type parameter in angle brackets after the class name. The letter <code>T</code> is a conventional placeholder for "Type".</p><p><strong>Syntax:</strong> <code>public class MyList&lt;T&gt; { ... }</code></p><p>When a developer uses your generic class, they specify a concrete type, creating what is called a <strong>closed generic type</strong>: <code>MyList&lt;int&gt;</code> or <code>MyList&lt;string&gt;</code>.</p><p>The .NET Just-In-Time (JIT) compiler then performs a specialization process:</p><ul><li><p>For <strong>value types</strong> (like <code>int</code>, <code>double</code>, <code>struct</code>), the JIT compiler creates a brand new, highly optimized version of the class specifically for that value type. <code>MyList&lt;int&gt;</code> becomes a class where <code>T</code> is replaced with <code>int</code> everywhere, completely avoiding any boxing or unboxing.</p></li><li><p>For <strong>reference types</strong> (<code>string</code>, <code>Car</code>, etc.), the JIT is able to reuse a single underlying implementation for all of them, because all references are the same size.</p></li></ul><p><br></p><p><strong>Example: A Reusable Repository</strong></p><p>Let's create a simple generic <code>Repository&lt;T&gt;</code> class that can store and retrieve any type of data entity.</p><p>C#</p><pre class="prettyprint linenums">// 'T' is a placeholder for whatever type we want this repository to handle.
+public class Repository&lt;T&gt;
+{
+    private List&lt;T&gt; _items = new List&lt;T&gt;();
+
+    public void Add(T item)
+    {
+        _items.Add(item);
+    }
+
+    public T GetById(int index)
+    {
+        return _items[index];
+    }
+}
+
+public class Employee { public string Name { get; set; } }
+public class Product { public string Sku { get; set; } }
+
+// --- In your Main method ---
+// 1. Create a repository specifically for Employee objects.
+Repository&lt;Employee&gt; employeeRepo = new Repository&lt;Employee&gt;();
+employeeRepo.Add(new Employee { Name = "John Doe" });
+// employeeRepo.Add(new Product()); // ERROR! Compiler enforces type safety.
+
+// 2. Create another repository specifically for Product objects.
+Repository&lt;Product&gt; productRepo = new Repository&lt;Product&gt;();
+productRepo.Add(new Product { Sku = "XYZ-123" });
+
+// We have achieved both type safety and code reusability.
+</pre><p><br></p><p><br></p><h4><strong>Lecture 2: Multiple Generic Parameters</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A generic class or method is not limited to a single type parameter. You can define multiple placeholders for different types when your class needs to work with a combination of them.</p><p><br></p><p><strong>How It Works: Comma-Separated Type Parameters</strong></p><p>You declare multiple type parameters by listing them inside the angle brackets, separated by commas. By convention, the letters <code>T</code>, <code>U</code>, <code>V</code> are often used, or more descriptive names like <code>TKey</code> and <code>TValue</code>.</p><p><strong>Syntax:</strong> <code>public class MyClass&lt;T, U&gt; { ... }</code></p><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use multiple generic parameters when you are creating a class that naturally pairs or relates two or more different and potentially unrelated types. The most famous example in the .NET framework is <code>Dictionary&lt;TKey, TValue&gt;</code>, which needs one generic type for its keys and another for its values.</p><p><br></p><p><strong>Example: A Simple </strong><code><strong>Pair</strong></code><strong> Class</strong></p><p>Let's create a generic <code>Pair</code> class that can hold any two items together.</p><p>C#</p><pre class="prettyprint linenums">// This class uses two type parameters, TFirst and TSecond.
+public class Pair&lt;TFirst, TSecond&gt;
+{
+    public TFirst First { get; set; }
+    public TSecond Second { get; set; }
+
+    public Pair(TFirst first, TSecond second)
+    {
+        this.First = first;
+        this.Second = second;
+    }
+}
+
+// --- In your Main method ---
+// Create a pair of a string and an integer.
+Pair&lt;string, int&gt; nameAndAge = new Pair&lt;string, int&gt;("Alice", 30);
+Console.WriteLine($"Name: {nameAndAge.First}, Age: {nameAndAge.Second}");
+
+// Create a pair of an Employee object and a double.
+Employee emp = new Employee { Name = "Bob" };
+Pair&lt;Employee, double&gt; employeeAndSalary = new Pair&lt;Employee, double&gt;(emp, 75000.50);
+Console.WriteLine($"Employee: {employeeAndSalary.First.Name}, Salary: {employeeAndSalary.Second}");
+</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Generic Constraints</strong></h4><p><br></p><p><strong>Introduction</strong></p><p><strong>Constraints</strong> are rules that you apply to a generic type parameter to restrict the types that can be used with your generic class or method. Without constraints, the compiler's only assumption about a type parameter <code>T</code> is that it derives from <code>System.Object</code>. This means you can only call methods on <code>T</code> that are defined in <code>System.Object</code> (like <code>ToString()</code>, <code>Equals()</code>, etc.).</p><p>Constraints give the compiler more information about the capabilities of <code>T</code>, allowing you to call specific methods or access specific properties on it.</p><p><br></p><p><strong>How It Works: The </strong><code><strong>where</strong></code><strong> Clause</strong></p><p>You apply constraints using the <code>where</code> keyword after the generic type parameter list.</p><p><strong>Syntax:</strong> <code>public class MyClass&lt;T&gt; where T : ...</code></p><p><br></p><p><strong>Common Types of Constraints</strong></p><ul><li><p><code><strong>where T : class</strong></code>: The type argument must be a reference type (a class, interface, delegate, or array).</p></li><li><p><code><strong>where T : struct</strong></code>: The type argument must be a non-nullable value type (an <code>int</code>, <code>double</code>, <code>bool</code>, or a custom <code>struct</code>).</p></li><li><p><code><strong>where T : new()</strong></code>: The type argument must have a public, parameterless constructor. This allows you to create new instances of <code>T</code> within your generic class (<code>new T()</code>). This constraint must be the last one in the list.</p></li><li><p><code><strong>where T : &lt;base class name&gt;</strong></code>: The type argument must be, or derive from, the specified base class. This allows you to safely use all the public members of that base class on <code>T</code>.</p></li><li><p><code><strong>where T : &lt;interface name&gt;</strong></code>: The type argument must implement the specified interface. This is one of the most common and powerful constraints, as it allows you to call the interface's methods on <code>T</code>.</p></li></ul><p><br></p><p><strong>Example: Constraining to an Interface</strong></p><p>Let's create a generic reporting service that can generate a report from any object, as long as that object has a <code>Name</code> property. We can enforce this with an interface.</p><p>C#</p><pre class="prettyprint linenums">// 1. Define the contract (the interface).
+public interface IEntityWithName
+{
+    string Name { get; }
+}
+
+// 2. Create some classes that implement the interface.
+public class Product : IEntityWithName
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}
+public class Customer : IEntityWithName
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+}
+
+// 3. Create the generic class with a constraint.
+public class ReportGenerator&lt;T&gt; where T : IEntityWithName
+{
+    public void GenerateReport(T item)
+    {
+        // Because of the constraint, the compiler KNOWS that 'item'
+        // will have a 'Name' property, so this code is safe.
+        Console.WriteLine($"--- Report for {item.Name} ---");
+        // ... more reporting logic ...
+    }
+}
+
+// --- In your Main method ---
+var generator = new ReportGenerator&lt;Product&gt;();
+generator.GenerateReport(new Product { Name = "Laptop", Price = 1200 });
+
+// This would cause a compiler error because 'int' does not implement IEntityWithName.
+// var intGenerator = new ReportGenerator&lt;int&gt;(); // ERROR!
+</pre><p><br></p><p><br></p><h4><strong>Lecture 4: Generic Methods</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <strong>generic method</strong> is a method that is declared with its own type parameters. This allows a single method to perform the same action on a wide variety of different data types while still maintaining full type safety. A key feature is that a generic method can exist inside a <strong>non-generic class</strong>.</p><p><br></p><p><strong>How It Works: Syntax and Type Inference</strong></p><p>You declare a generic method by placing the type parameter in angle brackets immediately after the method name.</p><p><strong>Syntax:</strong> <code>access_modifier return_type MethodName&lt;T&gt;(T parameter) { ... }</code></p><p>One of the most powerful features of generic methods is <strong>type inference</strong>. In most cases, the C# compiler is smart enough to deduce the type <code>T</code> from the arguments you pass to the method. This means you usually don't have to explicitly specify the type in angle brackets when you call the method.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use a generic method when you need a single, standalone utility function that performs an action that is not dependent on a specific data type. This is perfect for general-purpose operations like swapping, sorting, or comparing items. The classic textbook example is a <code>Swap</code> method.</p><p><br></p><p><strong>Example: A Reusable </strong><code><strong>Swap</strong></code><strong> Method</strong></p><p>Without generics, you would need to write a separate <code>Swap</code> method for integers, one for strings, one for doubles, and so on. With a generic method, you only need to write it once.</p><p>C#</p><pre class="prettyprint linenums">public class Utilities
+{
+    // This is a generic method. 'T' can be any type.
+    public static void Swap&lt;T&gt;(ref T a, ref T b)
+    {
+        Console.WriteLine($"Swapping items of type: {typeof(T).Name}");
+        T temp = a;
+        a = b;
+        b = temp;
+    }
+}
+
+// --- In your Main method ---
+// --- Swapping Integers ---
+int x = 5;
+int y = 10;
+Console.WriteLine($"Before: x={x}, y={y}");
+// We call Swap, not Swap&lt;int&gt;. The compiler infers that T is int.
+Utilities.Swap(ref x, ref y);
+Console.WriteLine($"After: x={x}, y={y}");
+
+Console.WriteLine("--------------------");
+
+// --- Swapping Strings ---
+string s1 = "Hello";
+string s2 = "World";
+Console.WriteLine($"Before: s1={s1}, s2={s2}");
+// Here, the compiler infers that T is string.
+Utilities.Swap(ref s1, ref s2);
+Console.WriteLine($"After: s1={s1}, s2={s2}");
+</pre><p><em>Output:</em></p><pre class="prettyprint linenums">Before: x=5, y=10
+Swapping items of type: Int32
+After: x=10, y=5
+--------------------
+Before: s1=Hello, s2=World
+Swapping items of type: String
+After: s1=World, s2=Hello
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: IMP Points to Remember</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>This lecture consolidates the most critical, practical, and interview-worthy points about generics. Understanding these concepts demonstrates a professional-level grasp of C#.</p><p><br></p><p><strong>1. Generics Solve Two Main Problems</strong></p><p>This is the most important takeaway and the ideal answer to the interview question, "Why does C# have generics?"</p><ul><li><p><strong>1. Type Safety:</strong> Generics move type checking from run-time to <strong>compile-time</strong>. When you use <code>List&lt;string&gt;</code>, the compiler guarantees that only strings can be added, preventing <code>InvalidCastException</code> errors that were common with older, non-generic collections.</p></li><li><p><strong>2. Performance:</strong> Generics eliminate the need for <strong>boxing and unboxing</strong> when working with value types (<code>int</code>, <code>double</code>, <code>struct</code>, etc.). <code>List&lt;int&gt;</code> stores integers directly, whereas the old <code>ArrayList</code> had to "box" each integer into an object on the heap, causing significant performance degradation and pressure on the garbage collector.</p></li></ul><p><br></p><p><strong>2. </strong><code><strong>List&lt;T&gt;</strong></code><strong> vs. </strong><code><strong>ArrayList</strong></code><strong>: The Classic Example</strong></p><p>This comparison is the quintessential way to explain the benefits of generics.</p><ul><li><p><code><strong>ArrayList</strong></code><strong> (Old, Non-Generic):</strong></p><ul><li><p>Stores everything as <code>object</code>.</p></li><li><p><strong>Not Type-Safe:</strong> You can add an <code>int</code> and a <code>string</code> to the same list by mistake.</p></li><li><p><strong>Requires Casting:</strong> You must explicitly cast items back to their original type when you retrieve them, risking a run-time error.</p></li><li><p><strong>Causes Boxing:</strong> Incurs a performance penalty for value types.</p></li></ul></li><li><p><code><strong>List&lt;T&gt;</strong></code><strong> (Modern, Generic):</strong></p><ul><li><p>Stores a specific type <code>T</code>.</p></li><li><p><strong>Type-Safe:</strong> The compiler enforces that only items of type <code>T</code> can be added.</p></li><li><p><strong>No Casting Needed:</strong> When you retrieve an item, it is already of type <code>T</code>.</p></li><li><p><strong>High Performance:</strong> No boxing occurs for value types.</p></li></ul></li></ul><p>You should always use <code>List&lt;T&gt;</code> and other generic collections (<code>Dictionary&lt;TKey, TValue&gt;</code>, <code>Queue&lt;T&gt;</code>, etc.) in modern C# code.</p><p><br></p><p><strong>3. Constraints Unlock Functionality</strong></p><p>Remember that you use <strong>constraints</strong> (<code>where T : ...</code>) on a generic type parameter when your method needs to do more than just store or pass around the data. You use constraints when you need to <strong>call methods</strong> or <strong>access properties</strong> on the generic type. The most common constraints are:</p><ul><li><p><code>where T : IMyInterface</code>: Lets you call methods defined in <code>IMyInterface</code>.</p></li><li><p><code>where T : MyBaseClass</code>: Lets you use members from <code>MyBaseClass</code>.</p></li><li><p><code>where T : new()</code>: Lets you create a new instance of the type using <code>new T()</code>.</p></li></ul><p><br></p><p><strong>4. Generic Methods vs. Generic Classes</strong></p><p>Use this guideline to decide which to create:</p><ul><li><p><strong>Generic Class:</strong> Use when the <strong>entire class</strong> is designed to work as a container or manager for a specific placeholder type. The state of the class (its fields and properties) depends on <code>T</code>. Examples: <code>List&lt;T&gt;</code>, <code>Repository&lt;T&gt;</code>.</p></li><li><p><strong>Generic Method:</strong> Use for a single, <strong>standalone utility function</strong> that performs an action on any type, where the class containing the method does not itself need to be generic. Example: <code>Swap&lt;T&gt;()</code>, <code>Sort&lt;T&gt;()</code>.</p></li></ul><p><br></p><p><strong>5. Open vs. Closed Generic Types (Advanced Interview Point)</strong></p><p>Knowing this terminology demonstrates a deeper level of understanding.</p><ul><li><p><strong>Open Generic Type:</strong> The type definition with the placeholder still present. You cannot create an instance of an open type. Example: <code>typeof(List&lt;&gt;)</code>.</p></li><li><p><strong>Closed Generic Type:</strong> A type where a specific type argument has been provided for the placeholder. This is the type you can instantiate. Example: <code>typeof(List&lt;int&gt;)</code>.</p></li></ul><p><br></p></div></body></html>

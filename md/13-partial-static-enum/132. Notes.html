@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 13: Partial Classes, Static Classes, Enumerations</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: Partial Classes</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code><strong>partial</strong></code><strong> class</strong> is a special feature in C# that allows the definition of a single class to be split across <strong>multiple physical </strong><code><strong>.cs</strong></code><strong> files</strong>. When you compile your application, the C# compiler finds all the separate parts of the partial class and combines them into a single, complete class. This is purely a compile-time feature; at run-time, there is no difference between a regular class and a partial class.</p><p><br></p><p><strong>How It Works: The </strong><code><strong>partial</strong></code><strong> Keyword</strong></p><p>To create a partial class, you use the <code>partial</code> keyword just before the <code>class</code> keyword in each file where a part of the class is defined. All parts must:</p><ul><li><p>Use the <code>partial</code> keyword.</p></li><li><p>Have the exact same class name.</p></li><li><p>Be in the same namespace.</p></li><li><p>Be in the same project (assembly).</p></li></ul><p>The compiler will merge all members—fields, properties, methods, etc.—from all partial files into the final class definition.</p><p><br></p><p><strong>Why and When to Use It</strong></p><ol><li><p><strong>Working with Source Generators (Primary Use Case):</strong> This is the most important and common use of partial classes in modern C#. Many .NET frameworks (like ASP.NET Core, WPF, WinForms) use code generation tools. These tools automatically generate code based on your definitions (e.g., from a UI design or a web endpoint). They place this machine-generated code in one part of a partial class (e.g., <code>MyPage.g.cs</code>). This allows you, the developer, to write your own logic in a separate file for the same class (e.g., <code>MyPage.cs</code>). This separation is crucial because it means you can freely modify your code without worrying that the code generator will overwrite your changes when it runs again.</p></li><li><p><strong>Managing Very Large Classes:</strong> In some legacy systems or extremely large classes, the <code>partial</code> keyword can be used to split the class into multiple files for better organization. For example, a massive class could have its fields and properties in one file, its public methods in another, and its private helper methods in a third.</p><ul><li><p><strong>Best Practice Note:</strong> While this is possible, a class that is so large it needs to be split often indicates a violation of the <strong>Single Responsibility Principle</strong>. It's usually a sign that the class is doing too much and should be refactored into several smaller, more focused classes.</p></li></ul></li></ol><p><br></p><p><strong>Example</strong></p><p>Let's split a <code>User</code> class definition across two files.</p><p><strong>File 1: </strong><code><strong>User.Data.cs</strong></code></p><p>C#</p><pre class="prettyprint linenums">namespace MyWebApp
+{
+    // The first part of the User class, focusing on data.
+    public partial class User
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+    }
+}
+</pre><p><strong>File 2: </strong><code><strong>User.Logic.cs</strong></code></p><p>C#</p><pre class="prettyprint linenums">namespace MyWebApp
+{
+    // The second part of the User class, focusing on behavior.
+    public partial class User
+    {
+        public void SendWelcomeEmail()
+        {
+            // This method can access the 'Email' property defined in the other file.
+            Console.WriteLine($"Sending welcome email to {this.Email}...");
+        }
+    }
+}
+</pre><p>At compile time, these two parts are combined into a single <code>User</code> class that has all four members.</p><p><br></p><p><br></p><h4><strong>Lecture 2: Partial Methods</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code><strong>partial</strong></code><strong> method</strong> is a special kind of method whose definition can be separated from its implementation. The signature (the declaration) of the method can be defined in one part of a partial class, and the implementation (the method body) can be <em>optionally</em> provided in another part of the same partial class.</p><p><br></p><p><strong>How It Works &amp; The "Magic" of Unimplemented Methods</strong></p><p>A partial method is declared with the <code>partial</code> keyword, must have a <code>void</code> return type, and is implicitly <code>private</code>.</p><p><strong>File 1 (e.g., a generated file): The Declaration</strong></p><p>C#</p><pre class="prettyprint linenums">public partial class MyComponent
+{
+    // This defines the SIGNATURE of the partial method. It's a "hook".
+    partial void OnNameChanged(string newName);
+
+    public void SetName(string name)
+    {
+        // ... logic to set the name ...
+        
+        // The generator can safely CALL the partial method.
+        OnNameChanged(name);
+    }
+}
+</pre><p><strong>The key feature:</strong> If no other part of the <code>MyComponent</code> class provides an implementation for <code>OnNameChanged</code>, the C# compiler <strong>completely removes the method declaration AND all calls to it</strong>. The call <code>OnNameChanged(name);</code> is erased from the final compiled code. This means there is <strong>zero performance overhead</strong> for an unimplemented partial method.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>This feature is used almost exclusively by <strong>source generators</strong>. The generator defines a partial method as an "optional hook" that the developer can choose to implement. It allows the generated code to provide customizable entry points without forcing the developer to implement them if they are not needed.</p><p><strong>Example: Implementing the Partial Method</strong></p><p><strong>File 2 (e.g., your handwritten file): The Optional Implementation</strong></p><p>C#</p><pre class="prettyprint linenums">public partial class MyComponent
+{
+    // We provide the IMPLEMENTATION for the partial method here.
+    // Because this exists, the compiler will keep the call in SetName().
+    partial void OnNameChanged(string newName)
+    {
+        Console.WriteLine($"Notification: Name was changed to '{newName}'.");
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Static Classes</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>A <code><strong>static class</strong></code> is a class that cannot be instantiated and cannot be inherited. It can only contain <code>static</code> members (fields, properties, and methods). It acts as a simple container for a group of related utility functions or constants that do not depend on any object state.</p><p><br></p><p><strong>How It Works: A Compile-Time Construct</strong></p><p>Marking a class as <code>static</code> is primarily a way of telling the compiler to enforce two strict rules:</p><ol><li><p>All members of this class <strong>must</strong> also be declared as <code>static</code>. The compiler will give an error if you try to declare an instance member inside a static class.</p></li><li><p>No one can create an instance of this class using the <code>new</code> keyword, and no other class can inherit from it.</p></li></ol><p>You don't need to create an object; you access the members directly through the class name.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use a static class when you have a collection of helper or utility methods that are logically related but do not need to be associated with a specific object's state.</p><p><strong>Real-World Examples from the .NET Framework</strong></p><ul><li><p><code><strong>System.Math</strong></code>: Contains methods for mathematical operations like <code>Sqrt()</code>, <code>Max()</code>, <code>Sin()</code>. You don't need a <code>Math</code> object to calculate a square root.</p></li><li><p><code><strong>System.Console</strong></code>: Contains methods for interacting with the console window like <code>WriteLine()</code> and <code>ReadKey()</code>.</p></li><li><p><code><strong>System.IO.File</strong></code>: Contains utility methods for working with files like <code>ReadAllText()</code> and <code>Exists()</code>.</p></li></ul><p><br></p><p><strong>Example: A Custom Utility Class</strong></p><p>C#</p><pre class="prettyprint linenums">// 'static' ensures this class cannot be instantiated.
+public static class UnitConverter
+{
+    private const double KmsInAMile = 1.60934;
+    
+    // All members must also be static.
+    public static double KilometersToMiles(double km)
+    {
+        return km / KmsInAMile;
+    }
+
+    public static double MilesToKilometers(double miles)
+    {
+        return miles * KmsInAMile;
+    }
+}
+
+// --- In your Main method ---
+// You call the methods directly on the class.
+double miles = UnitConverter.KilometersToMiles(10);
+Console.WriteLine($"10km is approximately {miles:F2} miles.");
+</pre><p><br></p><p><br></p><h4><strong>Lecture 4: Enumerations</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>An <strong>enumeration</strong>, or <code><strong>enum</strong></code>, is a special value type that allows you to define a set of named integral constants. It provides a way to create a distinct type that represents a fixed set of related values, making your code more readable, maintainable, and type-safe.</p><p><br></p><p><strong>Why and When to Use It</strong></p><p>The primary purpose of an enum is to <strong>avoid "magic numbers"</strong> and improve code readability. Instead of writing code like <code>if (userStatus == 2)</code>, which is meaningless without context, you can write <code>if (status == UserStatus.Suspended)</code>. This is self-documenting and far less error-prone. It restricts a variable to a known set of allowed values, preventing bugs where an invalid integer might be assigned.</p><p><br></p><p><strong>How It Works: Underlying Values</strong></p><p>By default, an enum's underlying data type is <code>int</code>. The compiler assigns values to the members starting from <code>0</code> and incrementing by one.</p><p>C#</p><pre class="prettyprint linenums">public enum DayOfWeek // Starts at 0
+{
+    Sunday,    // 0
+    Monday,    // 1
+    Tuesday,   // 2
+    Wednesday, // 3
+    Thursday,  // 4
+    Friday,    // 5
+    Saturday   // 6
+}
+</pre><p>You can customize this behavior:</p><ol><li><p><strong>Change the starting number:</strong></p><p>C#</p><pre class="prettyprint linenums">public enum Month { January = 1, February = 2, /* ... */ }
+</pre></li><li><p><strong>Change the underlying type</strong> (to <code>byte</code>, <code>long</code>, etc.):</p><p>C#</p><pre class="prettyprint linenums">public enum ErrorCode : ushort { NotFound = 404, ServerError = 500 }
+</pre></li></ol><p><br></p><p><strong>Example</strong></p><p>C#</p><pre class="prettyprint linenums">public enum ShippingStatus
+{
+    Ordered,
+    Processing,
+    Shipped,
+    InTransit,
+    Delivered
+}
+
+public class Order
+{
+    public int OrderId { get; set; }
+    public ShippingStatus Status { get; set; }
+}
+
+public class ShippingService
+{
+    public void ProcessOrder(Order order)
+    {
+        // Using an enum in a switch statement is very clean and readable.
+        switch (order.Status)
+        {
+            case ShippingStatus.Ordered:
+                Console.WriteLine("Processing the order...");
+                order.Status = ShippingStatus.Processing;
+                break;
+            case ShippingStatus.Processing:
+                Console.WriteLine("Shipping the order...");
+                order.Status = ShippingStatus.Shipped;
+                break;
+            // ... other cases
+        }
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: IMP Points to Remember</strong></h4><p><br></p><ul><li><p><code><strong>partial</strong></code><strong> is a Compile-Time Feature:</strong> This is the most important takeaway. Partial classes and methods are a tool for organizing source code in different files. The compiler "stitches" them together into one single class before the program runs. At run-time, the CLR has no concept of a "partial class."</p></li><li><p><strong>The Primary Use of </strong><code><strong>partial</strong></code><strong> is Code Generation:</strong> In modern C#, the main reason you'll encounter partial classes is when working with frameworks that automatically generate code (like ASP.NET Core, WPF, Entity Framework). It provides a clean separation between machine-generated code and developer-written code.</p></li><li><p><strong>A </strong><code><strong>static class</strong></code><strong> is a Sealed, Abstract Container:</strong> Thinking of it this way can be helpful. It's "abstract" in that you can't create an instance, and it's "sealed" in that you can't inherit from it. Its sole purpose is to hold a group of static members.</p></li><li><p><code><strong>static class</strong></code><strong> vs. Singleton Pattern:</strong> This is a good interview topic.</p><ul><li><p>A <strong>static class</strong> cannot be instantiated at all. It exists only as a single container for its members. It cannot implement interfaces.</p></li><li><p>The <strong>Singleton Pattern</strong> is a design pattern where a <em>regular</em> class is engineered to ensure only <em>one instance</em> of it is ever created. That single instance is an object that can be passed around, can implement interfaces, and can be inherited from (if not sealed).</p></li></ul></li><li><p><code><strong>enum</strong></code><strong> for Type Safety and Readability:</strong> Always use an enum over integer or string constants when you have a variable that should be restricted to a small, fixed set of named values. It prevents bugs and makes the code self-documenting.</p></li><li><p><strong>Casting </strong><code><strong>enum</strong></code><strong>s:</strong> You can explicitly cast an integer to an enum type and vice-versa. This can be useful when interoperating with databases or APIs that store the enum as a number. <code>ShippingStatus status = (ShippingStatus)2; // status is now 'Shipped'</code>. <code>int statusValue = (int)ShippingStatus.Shipped; // statusValue is 2</code>.</p></li></ul><p><br></p></div></body></html>

@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="ClassLibrary1/ClassLibrary1.csproj" />
+  <Project Path="Day_06_Work_01/Day_06_Work_01.csproj" />
+  <Project Path="Day_06_Work_02/Day_06_Work_02.csproj" />
+  <Project Path="Day_06_Work_03/Day_06_Work_03.csproj" />
+  <Project Path="Day_06_Work_04/Day_06_Work_04.csproj" />
+  <Project Path="Day_06_Work_05/Day_06_Work_05.csproj" />
+</Solution>

@@ -1,4 +1,6 @@
 <Solution>
-  <Project Path="ClassLibrary1/ClassLibrary1.csproj" />
-  <Project Path="Day_05_Work_01/Day_05_Work_01.csproj" />
+  <Project Path="ClassLibrary1/Entities.csproj" Id="44a84abe-4d2e-416f-8f41-b2cec6b7c26f" />
+  <Project Path="Day_05_Work_01/Day_05_Work_01.csproj" Id="2a5a540e-3366-48e3-a7c5-2a38d2e913af" />
+  <Project Path="Day_05_Work_02/Day_05_Work_02.csproj" Id="d6e63e87-de78-4e15-aae5-5ebe2f8acb9a" />
+  <Project Path="Day_05_Work_03/Day_05_Work_03.csproj" Id="808cf92e-dd40-436a-8f56-d64fc7d89342" />
 </Solution>

@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Section Cheat Sheet (PPT)</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Section Cheat Sheet (PPT)</h1><div class="content"><h4>Abstraction</h4><p>Abstraction is a concept of representing objects in a simplified way by focusing only on the essential features and ignoring the irrelevant details.</p><p>It provides a blueprint or a contract for derived classes to follow, ensuring consistency in your code.</p><p><br></p><p><strong>Benefit:</strong></p><p>Makes the program loosely coupled (makes the classes less dependent on the other).</p><p><br></p><p><strong>Implemented using:</strong></p><ul><li><p>Abstract classes [or]</p></li><li><p>Interfaces</p></li></ul><p><br></p><h4>Abstract Classes</h4><p>Abstract class is a parent class, for which, we can't create object; but we can create child classes.</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-31-b995a4586595148cbf4dc321bf4ec53c.png"></figure><p><br></p><p><strong>Parent Class [Abstract Class]</strong></p><pre class="prettyprint linenums">abstract class AbstractClassName
+{
+  //Abstract Class Members here
+}</pre><p><br></p><p><strong>Child Class of Abstract Class</strong></p><pre class="prettyprint linenums">class ChildClassName : AbstractClassName
+{
+  Child Class Members here
+}</pre><p>The main intention of abstract class is to provide common set of fields and methods to all of its child classes of a specific group.</p><p>Abstract class can contain all types of members (fields, properties, methods, constructors etc.).</p><p>We can't create object for abstract class; but we can access its members through child class's object.</p><p>So 'creating child class of abstract class' is the only-way to utilize abstract classes.</p><p>Use Abstract class concept, for the classes, for which, you feel creating object is not meaningful.</p><p><br></p><p><br></p><h4>Comparison Table: Class (vs) Abstract Class</h4><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-31-fece780ba20c78debe726876ca4152ae.png"></figure><p><br></p><p><strong>Based on members:</strong></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-32-a42a651c9c5f6f25d438216fc9f1bc4b.png"></figure><p><br></p><p><br></p><h4>Abstract Methods</h4><p>Abstract methods are declared in parent class, with "abstract" keyword; implemented in child classes, with "override" keyword.</p><p>When the parent class don't want to provide the definition of a method;it wants to let child classes to implement the method.</p><p><br></p><p><strong>Parent Class [Abstract Class]</strong></p><pre class="prettyprint linenums">abstract class AbstractClassName
+{
+   AccessModifier abstract ReturnDataType MethodName(param1, …);
+}</pre><p><br></p><p><strong>Child Class of Abstract Class</strong></p><pre class="prettyprint linenums">class ChildClassName : AbstractClassName
+{
+   AccessModifier override ReturnDataType MethodName(param1, …)
+   {
+   }
+}</pre><p><br></p><p>Abstract Methods contain "method declaration" only; but not "method body".</p><p>Child class&nbsp; must provide method body for abstract methods.</p><p><br></p><p>Eg:</p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-32-387b5f2b57b0718b652a3c3dd319e0be.png"></figure><p><br></p><p><br></p><h4>Interfaces</h4><p>Interface is a set of abstract methods, that must be implemented by the child classes.</p><p><br></p><p>Eg:</p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-32-5a0ed299efca886720bee41435bb2bd0.png"></figure><p><br></p><p><strong>Interface</strong></p><pre class="prettyprint linenums">interface InterfaceName
+{
+    ReturnDataType MethodName(param1, …);
+}</pre><p><br></p><p><strong>Child Class of Interface</strong></p><pre class="prettyprint linenums">class ChildClassName : InterfaceName
+{
+    public ReturnDataType MethodName(param1, …)
+    {
+    }
+}</pre><p><br></p><ul><li><p>The child class that implements the interface, MUST implement ALL METHODS of the interface.</p></li><li><p>Interface methods are by default "public" and "abstract".</p></li><li><p>The child class must implement all interface methods, with same signature.</p></li><li><p>You can't create object for interface.</p></li><li><p>You can create reference variable for the interface.</p></li><li><p>The reference variable of interface type can only store the address of objects of any one of the corresponding child classes.</p></li><li><p>You can implement multiple interfaces in the same child class [Multiple Inheritance].</p></li><li><p>An interface can be child of another interface.</p></li></ul><p><br></p><p><br></p><h4>Comparison Table: Abstract Class (vs) Interface</h4><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-32-46c97d73a7fd5cbf2431843785aab019.png"></figure><p><br></p><p><strong>Based on members:</strong></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-32-e3cc14dbf69c8672b619fce8e381a018.png"></figure><p><br></p><p><br></p><h4>Polymorphism</h4><p>Polymorphism provides the ability to the developer, to define different implements for the same method in the same class or different classes.</p><p><br></p><p><strong>Compile-time polymorphism:</strong></p><ul><li><p>Eg:&nbsp;Method Overloading</p></li><li><p>Decission will be taken at compilation time.</p></li><li><p>Also known as "Early binding" / "Static polymorphism".</p></li></ul><p><br></p><p><strong>Run-time polymorphism:</strong></p><ul><li><p>Eg:&nbsp;Method Overriding</p></li><li><p>Decission will be taken at run time.</p></li><li><p>Also known as "Late binding" / "Dynamic polymorphism".</p></li></ul><p><br></p><p><br></p><p><strong>Implementation of different types of Polymorphism</strong></p><pre class="prettyprint linenums">public void Add(int a, int b);
+public void Add(int a, int b, int c);</pre><p><br></p><p><br></p><p><strong>Run-Time Polymorphism Example - Method Overriding:</strong></p><pre class="prettyprint linenums">abstract class ParentClass
+{
+  public abstract void Add(int a, int b);
+}
+
+class ChildClass1 :&nbsp;ParentClass
+{
+  public override void Add(int a, int b)
+  {
+        //Implementation for ChildClass1.Add
+  }
+}
+
+class ChildClass1 :&nbsp;ParentClass
+{
+&nbsp; public override void Add(int a, int b)
+&nbsp; {
+       //Implementation for ChildClass2.Add
+&nbsp; }
+}
+
+
+ParentClass c1;
+c1 = new ChildClass1();
+c1.Add(10, 20); //calls ChildClass1.Add
+
+c1 = new ChildClass2();
+c1.Add(10, 20); //calls ChildClass2.Add</pre><p><br></p><p><strong>Run-Time Polymorphism Example - With Interfaces:</strong></p><pre class="prettyprint linenums">interface InterfaceName
+{
+  void Add(int a, int b);
+}
+
+class ChildClass1 :&nbsp;InterfaceName
+{
+    public void Add(int a, int b)
+    {
+         //Implementation for ChildClass1.Add
+    }
+}
+
+class ChildClass2 :&nbsp;InterfaceName
+{
+&nbsp; &nbsp; public void Add(int a, int b)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//Implementation for ChildClass2.Add
+&nbsp; &nbsp; }
+}
+
+
+InterfaceName c1;
+c1 = new ChildClass1();
+c1.Add(10, 20); //calls ChildClass1.Add
+
+c1 = new ChildClass2();
+c1.Add(10, 20); //calls ChildClass2.Add</pre><p><br></p><p><br></p><h4>Multiple Inheritance</h4><p>In C#, "multiple inheritance" IS POSSIBLE with INTERFACES; that means a child class can have multiple parent interfaces.</p><p><br></p><p>Eg:</p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-33-4f6e17eb4d290cb06ed599168c245893.png"></figure><p><br></p><pre class="prettyprint linenums">interface  Interface1
+{
+  void Method1(param1, param2, ...);
+}
+
+interface  Interface2
+{
+  void Method2(param1, param2, ...);
+}
+
+class ChildClass : Interface1, Interface2
+{
+  public void Method1(param1, param2, ...)
+  {
+    //implementation for ChildClass.Method1
+  }
+
+&nbsp; public void Method1(param1, param2, ...)
+&nbsp; {
+&nbsp; &nbsp; //implementation for ChildClass.Method2
+&nbsp; }
+}
+
+Interface1 c1 = new ChildClass();
+c1.Method1(...);  //calls ChildClass.Method1
+
+Interface2 c2 = new ChildClass();
+c2.Method2(...); //calls ChildClass.Method2</pre><p><br></p><p>"One Child - Multiple Parent Classes / Parent Interfaces" is called as "Multiple Inheritance".</p><p>In C#.NET, "multiple inheritance" IS NOT POSSIBLE with CLASSES; that means you can't specify multiple parent classes.</p><p>The child class MUST IMPLEMENT all methods of all the interfaces, that are inherited from.</p><p><br></p><p><br></p><p><br></p><h4>Interface Inheritance</h4><p>If an interface inherits from another interface, we call it as "Interface Inheritance".</p><p>The child class that implements the child interface must implement all the members of both parent interface and child interface too.</p><p><br></p><p>Eg:</p><figure><img height="247" src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-34-024c7f5ca542d7b82c7ac8dc5f63d7b0.png" width="399"></figure><p><br></p><pre class="prettyprint linenums">interface Interface1
+{
+   public void Method1(param1, param2, ...);
+}
+
+interface Interface2 : Interface1
+{
+   public void Method2(param1, param2, ...);
+}
+
+class ChildClass :&nbsp;Interface2
+{
+  public void Method1(param1, param2, ...)
+  {
+    //Implementation for ChildClass.Method1
+  }
+
+&nbsp; public void Method2(param1, param2, ...)
+&nbsp; {
+&nbsp; &nbsp; //Implementation for ChildClass.Method2
+&nbsp; }
+}
+
+Interface1 c1 = new ChildClass();
+c1.Method1(...); //calls ChildClass.Method1
+
+Interface2 c2 = new ChildClass();
+c2.Method1(...); //calls ChildClass.Method1
+c2.Method2(...); //calls ChildClass.Method2</pre><p><br></p><p><br></p><p><br></p><h4>Explicit Interface Implementation</h4><p>"Explicit Interface Implementation" is used to implement an interface method privately; that means the interface method becomes as "private member" to the child class.</p><p><br></p><p>Eg:</p><figure><img height="316" src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-21_14-31-34-1fe329c531fa509036ade43c3de37c42.png" width="690"></figure><p><br></p><p><br></p><pre class="prettyprint linenums">interface Interface1
+{
+  void Method1(param1, param2, ...);
+}
+
+interface Interface2
+{
+  void Method1(param1, param2, ...);
+}
+
+class ChildClass :&nbsp;Interface1, Interface2
+{
+  void Interface1.Method1(param1, param2, ...)
+  {
+  }
+
+  void Interface2.Method1(param1, param2, ...)
+  {
+  }
+}
+
+Interface1 c1 = new ChildClass();
+c1.Method1(...); //calls Interface1.Method1 at ChildClass
+
+Interface2 c2 = new ChildClass();
+c2.Method1(...); //calls Interface2.Method1 at ChildClass</pre><p><br></p><p>If a child class inherits from two or more interfaces, and there is a duplicate method (having same name and parameters) among those interfaces; then use "Explicit Interface Implementation", to provide different implementations for different interface methods respectively.</p><p>You can use "Explicit Interface Implementation" to create private implementation of interface method; so that you can create abstraction for those methods.</p></div></body></html>

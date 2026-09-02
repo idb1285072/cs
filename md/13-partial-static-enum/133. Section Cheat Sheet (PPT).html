@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Section Cheat Sheet (PPT)</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Section Cheat Sheet (PPT)</h1><div class="content"><h4>Partial Classes</h4><p>Partial Class is a class that splits into multiple files.</p><p>Each file is treated as a "part of the class".</p><p><br></p><figure><img height="402" src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-23_16-39-41-7260efb3310150475493f3fadb2be024.png" width="782"></figure><p><br></p><p>At compilation time, all partial classes that have same name, become as a "single class".</p><p>All the partial classes (that want to be a part of a class) should have same name and should be in the same namespace and same assembly &amp; should have same access-modifier (such as 'internal' or 'public').</p><p>Duplicate members are not allowed in partial classes.</p><p>Any attributes / modifiers (such as abstract, sealed) applied on one partial class, will be applied to all partial classes that have same name.</p><p>The 'partial' keyword can be used only at before the keywords 'class', 'struct', 'interface' and 'void'.</p><p>Each partial class can be developed individually, by different developers / teams.</p><p>In WinForms / WebForms, the 'Designer-generated code' will be kept in one partial class; the 'code written by developer' will be kept in another partial class with same name; so both become as a single class at compilation time.</p><p><br></p><p><br></p><h4>Partial Methods</h4><p>Partial Methods are "declared in one partial class" (just like abstract method), and "implemented in another partial class", that have same name.</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-23_16-39-41-d76690d1ddee7e8ce3eedc3fb514db1a.png"></figure><p><br></p><p>Assume, there are two developers; the first developer develops the first partial class; second developer develops the second partial class.</p><p>The partial method lets the first developer to declare a partial method in one partial class; and the second developer implements the partial method in the other partial class.</p><p>Partial Methods can only be created in partial class or partial structs.</p><p>Partial Methods are implicitly private. It can't have any other access modifier.</p><p>Partial Methods can have only "void" return type.</p><p>Implementation of partial methods is optional. If there is no implementation of partial methods in any parts of the partial class, the method calls are removed by the compiler, at compilation time.</p><p>If you are building large class libraries and decide extension of methods to other developers, partial methods can be used.</p><p><br></p><p><br></p><h4>Static Classes</h4><p>Static class is a class that can contain only "static members".</p><p>If you don't want even single 'instance member' (non-static member), then use 'static class'.</p><p><strong>Advantage:</strong>&nbsp;We can avoid accidental creation of object for the class, by making it as "static class".</p><p><br></p><p><strong>Syntax to create a static class:</strong></p><pre class="prettyprint linenums">static class ClassName
+{
+  static fields
+  static methods
+  static constructors
+  static properties
+  static events
+}</pre><p><br></p><p><br></p><h4>Static Classes [vs] Normal Classes</h4><p><strong>Static Class:</strong></p><pre class="prettyprint linenums">static class ClassName
+{
+   static fields
+   static methods
+   static constructors
+   static properties
+   static events
+}</pre><p>Static class is to create ONLY static members (static fields, static methods etc.)</p><p><br></p><p><strong>Static Class:</strong></p><pre class="prettyprint linenums">class ClassName
+{
+   static fields
+   static methods
+   static constructors
+   static properties
+   static events
+
+   instance fields
+   instance methods
+   instance constructors
+   instance properties
+   instance events
+   destructors
+}</pre><p>Normal (non-static class)&nbsp;is to create both instance &amp; static members [or] only instance members.</p><p><br></p><p><br></p><h4>Comparison Table: Class [vs] Static Class</h4><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-23_16-39-41-0f7c69eca792b5407d82a51933ce5dc9.png"></figure><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2023-03-23_16-39-41-874b9c46a32f12664a9cfdbd3354997d.png"></figure><p><br></p><p><br></p><h4>Enumerations</h4><p>Enumeration is a collection of constants.</p><p>Enumeration is used to specify the list of options allowed to be stored in a field / variable.</p><p>Use enumeration if you don't want to allow other developers to assign other value into a field / variable, other than the list of values specified in the enumeration</p><p><strong>Syntax to access member of enum:</strong>&nbsp;<code>EnumerationName.ConstantName</code></p><p><br></p><p><strong>Syntax to create Enumeration:</strong></p><pre class="prettyprint linenums">enum EnumerationName
+{
+   Constant1, Constant2, …
+}</pre><p><br></p><p><br></p><p>By default, each constant will be assigned to a number, starts from zero; however you can change the number (integer only).</p><pre class="prettyprint linenums">enum EnumerationName
+{
+  Constant1 = value, Constant2 = value, …
+}</pre><p><br></p><p>The default data type of enum member is "int". However, you can change its data type as follows.</p><pre class="prettyprint linenums">enum EnumerationName : datatype
+{
+   Constant1 = value, Constant2 = value, …
+}</pre><p><br></p></div></body></html>

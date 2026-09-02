@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 17: Handling null</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: What is null</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>In C#, <code><strong>null</strong></code> is a special literal that represents the absence of a value. It is used with <strong>reference types</strong> (like <code>string</code>, <code>object</code>, or any <code>class</code> instance) to signify that a variable does not point to any object in memory on the heap. It means the reference is empty or non-existent.</p><p>By default, any variable of a reference type that has not been assigned an object is initialized to <code>null</code>. Understanding how to handle <code>null</code> is one of the most critical skills for a C# developer, as it is the source of the most common run-time error in .NET programming.</p><p><br></p><p><strong>How It Works: The </strong><code><strong>NullReferenceException</strong></code></p><p>The danger of <code>null</code> is that it leads to the dreaded <code><strong>NullReferenceException</strong></code>. This exception occurs at <strong>run-time</strong> when you try to access a member (a method, property, or field) on a variable that is currently <code>null</code>. You are essentially trying to press a button on a remote control that doesn't exist. The C# compiler cannot always detect this situation, so the program compiles fine but crashes when it runs.</p><p><br></p><p><strong>Example</strong></p><p>Let's look at a simple scenario that causes this error.</p><p>C#</p><pre class="prettyprint linenums">public class Program
+{
+    public static void Main(string[] args)
+    {
+        // 'name' is a reference type (string). We explicitly set it to null.
+        // This is the same as if it were an uninitialized class field.
+        string name = null;
+
+        // This line looks fine to the compiler. It only knows that 'name' is a string,
+        // and strings have a 'Length' property.
+        Console.WriteLine("The length of the name is: " + name.Length);
+
+        // When this code runs, the .NET runtime tries to find the object that 'name'
+        // points to. Since it points to nothing (null), the program cannot
+        // get a 'Length' property from nothing, and it crashes immediately
+        // by throwing a NullReferenceException.
+    }
+}
+</pre><p><br></p><p><strong>Best Practices &amp; Interview Perspective</strong></p><ul><li><p><strong>Defensive Programming:</strong> The key to avoiding this exception is "defensive programming." Before you use an object, especially one coming from a method parameter or a class field, always consider checking if it's <code>null</code>.</p><p>C#</p><pre class="prettyprint linenums">if (name != null)
+{
+    Console.WriteLine(name.Length);
+}
+else
+{
+    Console.WriteLine("Name is not provided.");
+}
+</pre></li><li><p><strong>Question:</strong> "What is a <code>NullReferenceException</code> and what causes it?"</p></li><li><p><strong>Ideal Answer:</strong> "A <code>NullReferenceException</code> is a run-time error that occurs when you try to access a member—like a method or property—on a variable that holds a <code>null</code> reference. It means the variable isn't pointing to an actual object instance in memory, so the operation cannot be performed."</p></li></ul><p><br></p><p><br></p><h4><strong>Lecture 2: Nullable Types</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>By default, <strong>value types</strong> (<code>int</code>, <code>double</code>, <code>bool</code>, <code>struct</code>, etc.) <strong>cannot be </strong><code><strong>null</strong></code>. This is because they are not references; a variable of a value type always contains the value itself. An <code>int</code> variable always contains a number, even if it's just <code>0</code>.</p><p>However, there are many real-world scenarios where a value type might logically be "missing" or "undefined." For example, in a database, a <code>Price</code> or <code>DateOfBirth</code> column might allow <code>NULL</code> values. To represent this in C#, the language provides <strong>nullable value types</strong>.</p><p><br></p><p><strong>How It Works: The </strong><code><strong>?</strong></code><strong> Syntax and </strong><code><strong>Nullable&lt;T&gt;</strong></code></p><p>You make a value type nullable by adding a question mark (<code>?</code>) after its name.</p><p><strong>Syntax:</strong> <code>int?</code>, <code>double?</code>, <code>bool?</code></p><p>This shorthand is an alias for a special generic struct called <code><strong>System.Nullable&lt;T&gt;</strong></code>. So, <code>int?</code> is just a cleaner way of writing <code>Nullable&lt;int&gt;</code>. This struct wraps your value type and adds two important properties:</p><ol><li><p><code><strong>HasValue</strong></code>: A <code>bool</code> property that is <code>true</code> if the variable holds an actual value and <code>false</code> if it is <code>null</code>.</p></li><li><p><code><strong>Value</strong></code>: A property of type <code>T</code> that gets the underlying value. You should <strong>only</strong> access this property after checking that <code>HasValue</code> is <code>true</code>, otherwise you will get an <code>InvalidOperationException</code>.</p></li></ol><p><br></p><p><strong>Example</strong></p><p>C#</p><pre class="prettyprint linenums">public class SurveyResponse
+{
+    // A rating might be optional, so we use a nullable int.
+    public int? Rating { get; set; }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        SurveyResponse response1 = new SurveyResponse();
+        response1.Rating = 5; // Assign a value.
+
+        SurveyResponse response2 = new SurveyResponse();
+        response2.Rating = null; // Represents a missing value.
+
+        PrintRating(response1);
+        PrintRating(response2);
+    }
+
+    public static void PrintRating(SurveyResponse response)
+    {
+        // ALWAYS check HasValue before accessing .Value
+        if (response.Rating.HasValue)
+        {
+            Console.WriteLine($"Rating provided: {response.Rating.Value}");
+        }
+        else
+        {
+            Console.WriteLine("No rating was provided.");
+        }
+    }
+}
+</pre><p><em>Output:</em></p><pre class="prettyprint linenums">Rating provided: 5
+No rating was provided.
+</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Null Coalescing Operator (</strong><code><strong>??</strong></code><strong>)</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>The <strong>null coalescing operator </strong><code><strong>??</strong></code> is a concise binary operator used to provide a <strong>default value</strong> for a nullable type or a reference type if it is <code>null</code>. It's a clean and highly readable shortcut for a common type of <code>if</code> check.</p><p><br></p><p><strong>How It Works</strong></p><p>The operator works on two operands: <code>A ?? B</code></p><ol><li><p>It evaluates the left-hand operand (<code>A</code>).</p></li><li><p>If <code>A</code> is <strong>not null</strong>, the expression returns the value of <code>A</code>.</p></li><li><p>If <code>A</code> <strong>is null</strong>, the expression returns the value of the right-hand operand (<code>B</code>).</p></li></ol><p><br></p><p><strong>When to Use It</strong></p><p>Use this operator whenever you want to use a variable's value but fall back to a default value if the variable is null. It makes your code much shorter and more expressive.</p><p><br></p><p><strong>Example</strong></p><p>Let's say we want to get a user's nickname to display, but if they haven't set one, we should use their full name as a fallback.</p><p>C#</p><pre class="prettyprint linenums">public class User
+{
+    public string FullName { get; set; }
+    public string Nickname { get; set; } // This can be null
+}
+
+// --- In your Main method ---
+User user1 = new User { FullName = "John Doe", Nickname = "Johnny" };
+User user2 = new User { FullName = "Jane Smith", Nickname = null };
+
+// The old way using an if statement:
+string displayName1;
+if (user1.Nickname != null)
+{
+    displayName1 = user1.Nickname;
+}
+else
+{
+    displayName1 = user1.FullName;
+}
+Console.WriteLine($"Welcome, {displayName1}"); // Output: Welcome, Johnny
+
+
+// The modern, concise way using the ?? operator:
+string displayName2 = user2.Nickname ?? user2.FullName;
+Console.WriteLine($"Welcome, {displayName2}"); // Output: Welcome, Jane Smith
+</pre><p><br></p><p><br></p><h4><strong>Lecture 4: Null Propagation Operator (</strong><code><strong>?.</strong></code><strong>)</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>The <strong>null propagation operator </strong><code><strong>?.</strong></code> (also known as the null-conditional operator) is a modern C# feature designed to make navigating object chains with potential <code>null</code> values much safer and more concise. It helps you avoid writing deeply nested <code>if</code> statements just to check for <code>null</code> at each step.</p><p><br></p><p><strong>How It Works</strong></p><p>When you use <code>?.</code> to access a member (a property or method), C# first checks if the object on the left of the <code>?.</code> is <code>null</code>.</p><ul><li><p>If it is <code><strong>null</strong></code>, the entire expression immediately <strong>short-circuits</strong> and returns <code>null</code>. It never attempts to access the member on the right, thus avoiding a <code>NullReferenceException</code>.</p></li><li><p>If it is <strong>not </strong><code><strong>null</strong></code>, it proceeds to access the member as usual.</p></li></ul><p>This operator can be chained. If any part of the chain <code>A?.B?.C</code> is <code>null</code>, the entire expression gracefully evaluates to <code>null</code>.</p><p>There is also a version for accessing indexers, called the <strong>null-conditional indexer (</strong><code><strong>?[]</strong></code><strong>)</strong>.</p><p><br></p><p><strong>Example</strong></p><p>Consider a common scenario where you need to get a customer's postal code. The customer might be null, or their address might be null.</p><p>C#</p><pre class="prettyprint linenums">public class Address { public string PostalCode { get; set; } }
+public class Customer { public Address ShippingAddress { get; set; } }
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Customer customerWithAddress = new Customer 
+        { 
+            ShippingAddress = new Address { PostalCode = "501505" } 
+        };
+        Customer customerWithoutAddress = new Customer { ShippingAddress = null };
+        Customer nullCustomer = null;
+
+        // --- The Old Way: Nested if checks ("pyramid of doom") ---
+        if (customerWithAddress != null)
+        {
+            if (customerWithAddress.ShippingAddress != null)
+            {
+                Console.WriteLine(customerWithAddress.ShippingAddress.PostalCode);
+            }
+        }
+
+        // --- The Modern, Safe, and Concise Way ---
+        // Using the null propagation operator.
+        string postal1 = customerWithAddress?.ShippingAddress?.PostalCode;
+        string postal2 = customerWithoutAddress?.ShippingAddress?.PostalCode;
+        string postal3 = nullCustomer?.ShippingAddress?.PostalCode;
+
+        // We can use the null coalescing operator to provide a default.
+        Console.WriteLine($"Postal Code 1: {postal1 ?? "Not Found"}"); // Output: 501505
+        Console.WriteLine($"Postal Code 2: {postal2 ?? "Not Found"}"); // Output: Not Found
+        Console.WriteLine($"Postal Code 3: {postal3 ?? "Not Found"}"); // Output: Not Found
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: IMP Points to Remember</strong></h4><p><br></p><ul><li><p><code><strong>null</strong></code><strong> is for Reference Types:</strong> Remember that <code>null</code> means a reference variable points to nothing. Value types cannot be <code>null</code> unless you explicitly make them nullable.</p></li><li><p><code><strong>NullReferenceException</strong></code><strong> is The Developer's Responsibility:</strong> This was famously called the "billion-dollar mistake" by its inventor. Modern C# features are designed to help you avoid it. Always be defensive and check for null, especially with data from external sources.</p></li><li><p><strong>Use Nullable Types (</strong><code><strong>int?</strong></code><strong>, </strong><code><strong>bool?</strong></code><strong>) for Optional Values:</strong> When a value type logically might not have a value (e.g., data from a database that can be <code>NULL</code>, an optional survey answer), use a nullable type. Always check the <code><strong>.HasValue</strong></code> property before accessing the <code><strong>.Value</strong></code> property to avoid an <code>InvalidOperationException</code>.</p></li><li><p><strong>Prefer </strong><code><strong>??</strong></code><strong> and </strong><code><strong>?.</strong></code><strong> for Conciseness and Safety:</strong> These operators are not just shortcuts; they lead to significantly cleaner, more readable, and safer code than manual <code>if (x != null)</code> checks. Embrace them in all modern C# code. They are a sign of a developer who knows the language well.</p></li><li><p><strong>Nullable Reference Types (Advanced Interview Point):</strong> In C# 8.0 and later, you can enable a project-level feature called "Nullable Reference Types." When enabled, the compiler's behavior flips:</p><ul><li><p>A standard <code>string</code> variable is considered <strong>non-nullable</strong> and the compiler will warn you if you try to assign <code>null</code> to it.</p></li><li><p>To declare a reference type that is <em>allowed</em> to be null, you must use the <code>?</code> syntax, just like with value types: <code>string?</code>.</p></li><li><p><strong>Why it matters:</strong> This feature helps you eliminate <code>NullReferenceException</code> errors at <strong>compile-time</strong> instead of waiting for them to crash your program at <strong>run-time</strong>. Mentioning your awareness of this modern feature demonstrates that you are up-to-date with C# best practices for writing robust code.</p></li></ul></li></ul><p><br></p></div></body></html>

@@ -4,6 +4,13 @@
     private int _categoryId;
     private string _categoryName;
 
+    // constructor
+    public Category(int categoryId, string categoryName)
+    {
+        _categoryId = categoryId;
+        _categoryName = categoryName;
+    }
+
     // public properties
     public int CategoryId
     {

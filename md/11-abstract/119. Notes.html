@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Notes</title><style>body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1c1d1f; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #fff; } h1 { font-size: 2rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d1d7dc; color: #2d2f31; } img { max-width: 100%; height: auto; display: block; margin: 20px 0; border-radius: 4px; } pre { background: #f7f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; border: 1px solid #d1d7dc; font-family: Consolas, Monaco, "Courier New", monospace; } blockquote { border-left: 4px solid #a435f0; margin: 0; padding-left: 15px; color: #6a6f73; } a { color: #5624d0; text-decoration: none; } a:hover { text-decoration: underline; }</style></head><body><h1>Notes</h1><div class="content"><h4><strong>Section 11: Abstract Classes and Interfaces</strong></h4><p><br></p><p><br></p><h4><strong>Lecture 1: Abstraction</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Abstraction is one of the four fundamental pillars of Object-Oriented Programming. Its core principle is to <strong>hide complex implementation details while exposing only the essential, high-level functionalities</strong>. It allows us to manage complexity by creating a simplified model of a system. The goal is to separate <em>what</em> an object does from <em>how</em> it does it.</p><p>A perfect real-world analogy is driving a car. To make the car go faster, you press the accelerator pedal. You interact with a simple, abstract interface (the pedal). You don't need to know the complex mechanics happening under the hood—the fuel injection, the spark plugs firing, the pistons moving, the transmission shifting gears. All of that complexity is abstracted away, allowing you to use the car effectively without being an expert mechanic.</p><p><br></p><p>In C#, abstraction is not just a concept; it's a practical tool we use to design flexible and maintainable software. The two primary mechanisms for implementing abstraction are <code><strong>abstract classes</strong></code> and <code><strong>interfaces</strong></code>. They allow us to define "contracts" that other classes must follow, ensuring a level of consistency and predictability without dictating the specific implementation details.</p><p><br></p><p><br></p><p><br></p><h4><strong>Lecture 2: Abstract Classes</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>An <code><strong>abstract class</strong></code> is a special type of base class that is incomplete and cannot be instantiated on its own. Its purpose is to serve as a common blueprint for a group of related derived classes. It acts as a hybrid, allowing you to provide some shared, concrete implementation (common methods and fields) while also defining a contract of <code>abstract</code> members that its derived classes are required to implement.</p><p><br></p><p><strong>How It Works &amp; Rules</strong></p><ul><li><p><strong>Declaration:</strong> You declare a class as abstract using the <code>abstract</code> keyword: <code>public abstract class Shape { ... }</code>.</p></li><li><p><strong>Instantiation:</strong> You <strong>cannot</strong> create an object of an abstract class. The line <code>new Shape();</code> will result in a compiler error. It only exists to be inherited from.</p></li><li><p><strong>Contents:</strong> An abstract class can contain everything a normal class can: fields, properties, constructors, and regular methods with full implementation.</p></li><li><p><strong>Abstract Members:</strong> Its unique feature is that it can also contain <code>abstract</code> methods and properties, which we will cover in the next lecture.</p></li><li><p><strong>Inheritance:</strong> Non-abstract child classes that inherit from an abstract class <strong>must</strong> provide an implementation for all of the inherited abstract members.</p></li></ul><p><br></p><p><strong>Why and When to Use It</strong></p><p>Use an abstract class when you want to model an <strong>"is-a" relationship</strong> for a group of closely related classes that <strong>share common code</strong>. If you have several classes (<code>Circle</code>, <code>Rectangle</code>, <code>Triangle</code>) that are all types of <code>Shape</code>, and they all share a common property like <code>Color</code> or a common method like <code>DisplayInfo()</code>, an abstract class is the perfect choice. It allows you to write the common code once in the base class, avoiding duplication.</p><p><br></p><p><strong>Example</strong></p><p>C#</p><pre class="prettyprint linenums">// This class cannot be instantiated directly. It's a conceptual blueprint.
+public abstract class Shape
+{
+    // 1. Can have fields and properties with implementation.
+    // This is common logic shared by all shapes.
+    public string Color { get; set; }
+
+    // 2. Can have a constructor, which is called by derived classes.
+    public Shape(string color)
+    {
+        this.Color = color;
+        Console.WriteLine("Shape constructor called.");
+    }
+
+    // 3. Can have regular, concrete methods.
+    public void DisplayColor()
+    {
+        Console.WriteLine($"The color of this shape is {Color}.");
+    }
+
+    // 4. Can have abstract members (the contract).
+    // This method has no body and must be implemented by derived classes.
+    public abstract double CalculateArea(); 
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 3: Abstract Methods</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>An <code><strong>abstract method</strong></code> is a method that is declared inside an <code>abstract class</code> but has <strong>no implementation body</strong>. It consists only of a signature (access modifier, return type, name, and parameters) followed by a semicolon.</p><p><br></p><p><strong>How It Works: The Contract</strong></p><p>An abstract method establishes a mandatory contract. By declaring <code>public abstract double CalculateArea();</code>, the <code>Shape</code> abstract class is stating: "Any concrete class that wants to be considered a <code>Shape</code> <strong>must</strong> provide its own specific implementation of how to calculate its area. I, the <code>Shape</code> class, cannot provide a generic implementation because the formula is different for every shape."</p><p><br></p><p><strong>Rules</strong></p><ul><li><p>An abstract method can only exist inside an <code>abstract class</code>.</p></li><li><p>It is declared with the <code>abstract</code> keyword and has no curly braces <code>{}</code> or method body.</p></li><li><p>Any non-abstract class that inherits from the abstract class <strong>must</strong> provide an implementation for all inherited abstract methods using the <code>override</code> keyword.</p></li></ul><p><br></p><p><strong>Example</strong></p><p>Let's create concrete classes that inherit from <code>Shape</code> and fulfill its contract.</p><p>C#</p><pre class="prettyprint linenums">public class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    // Call the base constructor to initialize the 'Color' property.
+    public Circle(string color, double radius) : base(color)
+    {
+        this.Radius = radius;
+    }
+
+    // We MUST provide an implementation for the abstract method.
+    // We use the 'override' keyword.
+    public override double CalculateArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+}
+
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+
+    public Rectangle(string color, double width, double height) : base(color)
+    {
+        this.Width = width;
+        this.Height = height;
+    }
+
+    // Provide the specific implementation for a rectangle's area.
+    public override double CalculateArea()
+    {
+        return Width * Height;
+    }
+}
+
+// --- In your Main method ---
+Circle myCircle = new Circle("Red", 10);
+Rectangle myRectangle = new Rectangle("Blue", 5, 10);
+
+myCircle.DisplayColor(); // Calls the concrete method from the base Shape class.
+Console.WriteLine($"Circle Area: {myCircle.CalculateArea()}"); // Calls the overridden method in the Circle class.
+
+myRectangle.DisplayColor();
+Console.WriteLine($"Rectangle Area: {myRectangle.CalculateArea()}");
+</pre><p><br></p><p><br></p><h4><strong>Lecture 4: Interfaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>An <code><strong>interface</strong></code> is a pure <strong>contract</strong>. It defines a set of related public members (methods, properties, events, or indexers) but provides <strong>no implementation</strong> for any of them. A class or struct that <em>implements</em> an interface makes a guarantee to the compiler that it will provide a public implementation for all members defined in that interface.</p><p>If an abstract class models an <strong>"is-a"</strong> relationship (a <code>Circle</code> is a <code>Shape</code>), an interface models a <strong>"can-do"</strong> capability (a <code>Car</code>, a <code>Person</code>, and a <code>Document</code> can all be <code>ISerializable</code>—they all have the capability of being saved).</p><p><br></p><p><strong>How It Works &amp; Rules</strong></p><ul><li><p><strong>Declaration:</strong> You use the <code>interface</code> keyword. By convention, interface names start with a capital <code>I</code>, for example, <code>ILogger</code> or <code>IDisposable</code>.</p></li><li><p><strong>Contents:</strong> Members inside an interface definition have no body and no access modifiers. They are all implicitly <code>public</code>.</p></li><li><p><strong>Implementation:</strong> A class implements an interface using the colon (<code>:</code>) syntax, just like inheritance. The class must then provide a public implementation for every member defined in the interface.</p></li></ul><p><br></p><p><strong>When to Use It</strong></p><p>Use an interface when you want to define a common capability that can be shared across <strong>unrelated classes</strong>. For example, you might have <code>Car</code>, <code>Bird</code>, and <code>Drone</code> classes. They have no logical "is-a" relationship, so they shouldn't share a common base class. However, they all have the ability to move, so they could all implement an <code>IMovable</code> interface.</p><p><br></p><p>Example</p><p>Let's define a contract for anything that can be saved.</p><p>C#</p><pre class="prettyprint linenums">// The interface defines the "what" (the contract), not the "how".
+public interface ISaveable
+{
+    void Save(); // No body, no access modifier.
+}
+
+// First class that implements the contract.
+public class Document : ISaveable
+{
+    public string Text { get; set; }
+    
+    // It MUST provide a public implementation of the Save method.
+    public void Save()
+    {
+        Console.WriteLine("Saving document to a .txt file...");
+    }
+}
+
+// A completely unrelated class that also implements the contract.
+public class PlayerProgress : ISaveable
+{
+    public int Level { get; set; }
+
+    // It provides its own specific implementation of Save.
+    public void Save()
+    {
+        Console.WriteLine("Saving player progress to the cloud...");
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 5: Dynamic Polymorphism using Interfaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>One of the most powerful features of interfaces is their ability to enable <strong>polymorphism</strong> among completely unrelated classes. Polymorphism allows us to write code that can work with objects of different classes in a uniform way, as long as they all share a common interface. This means you can create more flexible, decoupled, and maintainable systems.</p><p><br></p><p><strong>How It Works</strong></p><p>You can create variables, method parameters, or collections (like a <code>List</code>) of an interface type (e.g., <code>List&lt;ISaveable&gt;</code>). These can hold a reference to an object of <strong>any</strong> class that implements that interface.</p><p>When you call a method through the interface reference (e.g., <code>item.Save()</code>), the .NET runtime performs a dynamic lookup. It checks the actual type of the object at that moment and executes the specific implementation of the method provided by that object's class.</p><p><br></p><p><strong>When to Use It</strong></p><p>Use this pattern whenever you need to perform a common action on a group of different objects. For example, you might want to save the state of various parts of your application (the user's progress, the document they are editing, the application settings) in one go. As long as each of these classes implements <code>ISaveable</code>, you can handle them all with the same code.</p><p><br></p><p><strong>Example</strong></p><p>Let's use the <code>ISaveable</code> interface and the <code>Document</code> and <code>PlayerProgress</code> classes from the previous lecture. We'll create a single method that can save any object that implements the contract.</p><p>C#</p><pre class="prettyprint linenums">public interface ISaveable
+{
+    void Save();
+}
+
+public class Document : ISaveable
+{
+    public void Save()
+    {
+        Console.WriteLine("Saving document to a .txt file...");
+    }
+}
+
+public class PlayerProgress : ISaveable
+{
+    public void Save()
+    {
+        Console.WriteLine("Saving player progress to the cloud...");
+    }
+}
+
+public class ProgressManager
+{
+    // This method works with ANY object that implements ISaveable.
+    // It is decoupled from the concrete Document and PlayerProgress classes.
+    public void SaveAll(List&lt;ISaveable&gt; itemsToSave)
+    {
+        Console.WriteLine("\n--- Starting Save All Operation ---");
+        foreach (ISaveable item in itemsToSave)
+        {
+            // At runtime, C# will call the correct Save() method
+            // based on the actual object type of 'item'.
+            item.Save();
+        }
+        Console.WriteLine("--- Save All Operation Complete ---");
+    }
+}
+
+// --- In your Main method ---
+Document myDoc = new Document();
+PlayerProgress myProgress = new PlayerProgress();
+
+// Create a list of the interface type.
+List&lt;ISaveable&gt; saveableItems = new List&lt;ISaveable&gt;();
+
+// We can add different types of objects to the same list.
+saveableItems.Add(myDoc);
+saveableItems.Add(myProgress);
+
+ProgressManager manager = new ProgressManager();
+manager.SaveAll(saveableItems);
+</pre><p><em>Output:</em></p><pre class="prettyprint linenums">--- Starting Save All Operation ---
+Saving document to a .txt file...
+Saving player progress to the cloud...
+--- Save All Operation Complete ---
+</pre><p><br></p><p><br></p><h4><strong>Lecture 6: Multiple Inheritance using Interfaces</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>As we learned in the Inheritance section, C# enforces <strong>single inheritance</strong> for classes—a class can only inherit from one other base class. This rule prevents many complex problems. However, there are many situations where an object logically has multiple distinct roles or capabilities. Interfaces are the C# solution for achieving this form of <strong>multiple inheritance</strong>.</p><p><br></p><p><strong>How It Works</strong></p><p>A class can implement <strong>multiple interfaces</strong>. You simply list the interfaces after the colon, separated by commas. By doing so, the class promises to provide a public implementation for all members from all the interfaces it implements.</p><p>This allows a class to inherit a primary identity from its single base class (the "is-a" relationship) while also inheriting multiple sets of capabilities from various interfaces (the "can-do" relationships).</p><p><br></p><p><strong>When to Use It</strong></p><p>Use this pattern when you have a class that needs to conform to several different, unrelated contracts. A real-world example is an all-in-one printer/scanner/fax machine. It's one device, but it has multiple, distinct functionalities.</p><p><br></p><p><strong>Example</strong></p><p>Let's model a modern smartphone. It "is an" <code>ElectronicDevice</code> (its base identity), but it "can do" the job of a phone, a camera, and a GPS navigator.</p><p>C#</p><pre class="prettyprint linenums">// --- The Contracts (Interfaces) ---
+public interface IPhone
+{
+    void MakeCall(string number);
+}
+
+public interface ICamera
+{
+    void TakePhoto();
+}
+
+public interface IGps
+{
+    string GetCurrentLocation();
+}
+
+// --- The Base Class ---
+public class ElectronicDevice
+{
+    public int BatteryLevel { get; protected set; } = 100;
+}
+
+// --- The Concrete Class Implementing Multiple Interfaces ---
+// It inherits from ONE base class, but implements THREE interfaces.
+public class SmartPhone : ElectronicDevice, IPhone, ICamera, IGps
+{
+    // Implementation for IPhone contract
+    public void MakeCall(string number)
+    {
+        Console.WriteLine($"Calling {number}...");
+        BatteryLevel -= 5;
+    }
+
+    // Implementation for ICamera contract
+    public void TakePhoto()
+    {
+        Console.WriteLine("Taking a photo...");
+        BatteryLevel -= 2;
+    }
+
+    // Implementation for IGps contract
+    public string GetCurrentLocation()
+    {
+        Console.WriteLine("Finding current location...");
+        BatteryLevel -= 3;
+        return "Kuntloor, Telangana, India";
+    }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 7: Interface Inheritance</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Just as classes can inherit from other classes, interfaces can also inherit from other interfaces. This allows you to build more complex contracts from smaller, more reusable ones, creating a logical hierarchy of capabilities.</p><p><br></p><p><strong>How It Works</strong></p><p>When a derived interface inherits from a base interface, it incorporates all the members of that base interface into its own contract. Consequently, any class that implements the <strong>derived interface</strong> must provide an implementation for all members from <strong>both</strong> the derived interface and all of its base interfaces.</p><p><br></p><p><strong>When to Use It</strong></p><p>Use interface inheritance to create layered or tiered API contracts. You can have a very basic interface and then create more specialized interfaces that add more functionality, allowing classes to choose the level of complexity they want to implement.</p><p><br></p><p><strong>Example</strong></p><p>Let's model a data access contract. Some data sources might be read-only, while others are read-write.</p><p>C#</p><pre class="prettyprint linenums">// 1. The base contract: anything readable.
+public interface IReadable
+{
+    string Read(int id);
+}
+
+// 2. A contract for anything writeable.
+public interface IWriteable
+{
+    void Write(string data);
+}
+
+// 3. A derived interface that inherits from BOTH base interfaces.
+// This creates a more complex contract for full read/write access.
+public interface IReadWrite : IReadable, IWriteable
+{
+    // It can also add its own new members if needed.
+    void Delete(int id);
+}
+
+// This class only needs to be readable.
+public class ConfigurationReader : IReadable
+{
+    public string Read(int id) { /* ... logic ... */ return "config_value"; }
+}
+
+// This class needs the full read/write/delete functionality.
+// By implementing IReadWrite, it MUST implement all three methods.
+public class DatabaseConnection : IReadWrite
+{
+    public string Read(int id) { /* ... logic ... */ return "db_record"; }
+    public void Write(string data) { /* ... logic ... */ }
+    public void Delete(int id) { /* ... logic ... */ }
+}
+</pre><p><br></p><p><br></p><h4><strong>Lecture 8: Explicit Interface Implementation</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>Explicit interface implementation is a technique where a class member that implements an interface member is <strong>not</strong> made public on the class itself. The member can only be accessed by first casting the object to the specific interface type.</p><p><br></p><p><strong>How It Works: Syntax</strong></p><p>To explicitly implement an interface member, you prefix the member name with the <code>InterfaceName.</code> and you do <strong>not</strong> use an access modifier (like <code>public</code>).</p><p><code>void IMyInterface.MyMethod() { ... }</code></p><p><br></p><p><strong>Why and When to Use It</strong></p><p>There are two primary reasons to use this technique:</p><ol><li><p><strong>To Resolve Naming Collisions:</strong> This is the most common reason. It's used when a class implements two or more interfaces that happen to declare a member with the exact same name and signature. Explicit implementation allows the class to provide a separate implementation for each interface's member without conflict.</p></li><li><p><strong>To Hide Interface Members:</strong> Sometimes, an interface member is highly specialized or not part of the class's core public API. You can explicitly implement it to hide it from the class's main public surface, keeping the class's own API clean. The member is still accessible, but only to consumers who are specifically working with the interface.</p></li></ol><p><br></p><p><strong>Example: Resolving a Naming Collision</strong></p><p>Imagine you have two interfaces for logging, both with a <code>Log</code> method, but they are expected to behave differently.</p><p>C#</p><pre class="prettyprint linenums">public interface IFileLogger
+{
+    void Log(string message);
+}
+
+public interface IDatabaseLogger
+{
+    void Log(string message);
+}
+
+public class ReportGenerator : IFileLogger, IDatabaseLogger
+{
+    // Explicit implementation for IFileLogger.
+    // Note: No 'public' access modifier.
+    void IFileLogger.Log(string message)
+    {
+        Console.WriteLine($"Writing to file: {message}");
+    }
+
+    // Explicit implementation for IDatabaseLogger.
+    void IDatabaseLogger.Log(string message)
+    {
+        Console.WriteLine($"Writing to database: {message}");
+    }
+}
+
+// --- In your Main method ---
+ReportGenerator report = new ReportGenerator();
+
+// This would cause a compiler error because Log is not a public member of the class.
+// report.Log("My message"); // ERROR!
+
+// To call the methods, you must first cast the object to the specific interface.
+IFileLogger fileLogger = report;
+fileLogger.Log("File log entry."); // Output: Writing to file: File log entry.
+
+IDatabaseLogger dbLogger = report;
+dbLogger.Log("Database log entry."); // Output: Writing to database: Database log entry.
+</pre><p><br></p><p><br></p><h4><strong>Lecture 9: IMP Points to Remember</strong></h4><p><br></p><p><strong>Introduction</strong></p><p>This lecture summarizes the most critical, practical, and interview-worthy points about abstract classes and interfaces. The ability to articulate their differences is a hallmark of a proficient C# developer.</p><p><br></p><p><strong>Abstract Class vs. Interface: The Core Interview Question</strong></p><p>This is one of the most common C# OOP interview questions. You must be able to compare them clearly.</p><ul><li><p><strong>Core Purpose:</strong></p><ul><li><p><strong>Abstract Class:</strong> To provide a <strong>common base</strong> for a group of <strong>closely related classes</strong>. It models an <strong>"is-a"</strong> relationship (a <code>Dog</code> is an <code>Animal</code>).</p></li><li><p><strong>Interface:</strong> To define a <strong>common capability</strong> or contract that can be implemented by <strong>unrelated classes</strong>. It models a <strong>"can-do"</strong> relationship (a <code>Car</code> and a <code>Document</code> can both be <code>ISaveable</code>).</p></li></ul></li><li><p><strong>Implementation:</strong></p><ul><li><p><strong>Abstract Class:</strong> <strong>Can</strong> contain implementation details: fields, constructors, and methods with full bodies.</p></li><li><p><strong>Interface:</strong> Is a pure contract and traditionally <strong>cannot</strong> contain implementation. (Note: Modern C# allows default interface methods, but for interview purposes, stick to the classic definition unless asked about new features).</p></li></ul></li><li><p><strong>Inheritance:</strong></p><ul><li><p><strong>Abstract Class:</strong> A class can inherit from only <strong>one</strong> abstract class (single inheritance).</p></li><li><p><strong>Interface:</strong> A class can implement <strong>multiple</strong> interfaces.</p></li></ul></li><li><p><strong>Members:</strong></p><ul><li><p><strong>Abstract Class:</strong> Can have <code>public</code>, <code>protected</code>, <code>private</code>, etc. members. Can have <code>static</code> members and <code>const</code> fields.</p></li><li><p><strong>Interface:</strong> All members are implicitly <code>public</code>. Cannot have instance fields or instance constructors.</p></li></ul></li></ul><p><br></p><p><code><strong>abstract</strong></code><strong> vs. </strong><code><strong>virtual</strong></code><strong> Methods</strong></p><p>This is another common point of confusion.</p><ul><li><p>An <code>abstract</code> method has <strong>no implementation</strong> and <strong>must</strong> be overridden by the first non-abstract derived class.</p></li><li><p>A <code>virtual</code> method <strong>has an implementation</strong> in the base class, and derived classes <strong>can optionally</strong> override it if they need to provide a more specific behavior.</p></li></ul><p><br></p><p><strong>Interfaces are Contracts for Decoupling</strong></p><p>The primary power of interfaces is <strong>decoupling</strong>. When your code depends on an interface (<code>ILogger</code>) instead of a concrete class (<code>FileLogger</code>), you can easily swap out the implementation (e.g., change to a <code>DatabaseLogger</code>) without changing the code that uses it. This makes your applications more flexible, modular, and easier to test.</p></div></body></html>

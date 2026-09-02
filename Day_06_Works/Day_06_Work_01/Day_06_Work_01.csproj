@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A5A540E-3366-48E3-A7C5-2A38D2E913AF}</ProjectGuid>
+    <ProjectGuid>{78D8A6F6-4339-48B7-9D79-4581C1E57D15}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Day_05_Work_01</RootNamespace>
-    <AssemblyName>Day_05_Work_01</AssemblyName>
+    <RootNamespace>Day_06_Work_01</RootNamespace>
+    <AssemblyName>Day_06_Work_01</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Entities.csproj">
-      <Project>{44a84abe-4d2e-416f-8f41-b2cec6b7c26f}</Project>
-      <Name>Entities</Name>
+    <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj">
+      <Project>{964372d0-d5e5-483f-840f-d2ede6b0832b}</Project>
+      <Name>ClassLibrary1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
