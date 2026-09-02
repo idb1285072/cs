@@ -2,7 +2,7 @@
 
 ## What?
 
-- Variable is a **named memory location** in RAM
+- A variable is a **named storage location in memory** used to hold a value that can change during program execution.
 - Variable is like a **container** to store value
 
 ## Rules
@@ -32,9 +32,12 @@ VariableName
 ```
 
 ## Variable Naming Rules
-
-- should not contain space
-- should not contain special characters (except underscore)
-- duplicate variable names are not allowed
-- cannot be keywords
+- can contain letters, digits, and `_` only. space or special character cannot contain.
+- cannot start with digits.
+- cannot be reserved keywords. But `@int` is ok.
+- case-sensitive
+- duplicate variable names are not allowed within the same scope
+---
 - should use camelCase
+- use meaningful names. avoid vague names (`int x;`) or unnecessary abbreviations (`string cstName;`)
+- Boolean variables should sound like a question/state - `isActive, isCompleted, hasPermission, canEdit`

@@ -7,17 +7,15 @@
 
 ## Classification
 
-- Conditional Control Statement
+- Conditional Control Statement: Used to **choose** which code should execute.
   - if(simple-if, if-else, else-if, nested if)
   - switch-case
-- Looping Control Statement
+- Looping Control Statement: Used to **repeat** code.
   - while
   - do-while
   - for
-- Jumping Control Statement
+- Jumping Control Statement: Used to **change the normal flow** of execution.
   - goto
-  - break
-  - continue
-
-
-
+  - break (**exits** the current loop.)
+  - continue (**skips** the current iteration.)
+  - return

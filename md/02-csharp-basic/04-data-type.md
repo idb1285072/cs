@@ -4,7 +4,6 @@
 
 - **Type** specifies what type of value to be store in memory
 - Type is a.k.a. Data Type
--
 
 ## Primitive Types and Non-Primitive Types
 

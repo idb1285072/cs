@@ -2,8 +2,8 @@
 
 ## What?
 
-- Operator is a symbol to perform operation.
-- Operator receives one or more operands (values) and returns one value
+- Operator is a symbol or keyword to perform operation.
+- Operator **receives one or more operands** (values) and **returns one value**
 
 ## Classification
 
@@ -76,6 +76,6 @@
 - Logical OR `||`
 - Conditional `?:`
 - Assignment `=` `+=` `-=` `*=` `/=` `%=`
-  > Operations are evaluated based on the order of precedence.
 
+> Operations are evaluated based on the order of precedence.
 > Highest precedence appear at the top.
