@@ -2,7 +2,7 @@
 
 ## What?
 
-- Neckname or shortname of NamespacePath
+- Nickname or shortname of NamespacePath
 
 ## How?
 
