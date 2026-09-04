@@ -1,0 +1,7 @@
+- Single-Cast Delegates
+  - Contains reference of only one method
+  - When called, it directly invokes the referenced method
+- Multi-Cast Delegates
+  - Contains references of multiple methods
+  - When called, it invokes all the referenced methods, one-by-one in a sequence
+  - All methods' parameters and return type should be same
